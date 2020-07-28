@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>XamarinmeHosting</RootNamespace>
+    <PackageId>Xamarinme.Hosting</PackageId>
+    <Authors>melihercan</Authors>
+    <Product>Xamarinme.Hosting</Product>
+    <Description>Bringing .NET Core Hosting into Xamarin.
+It supports DependencyInjection, Configuration, Logging and Environment.</Description>
+    <Copyright>melihercan 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>me.png</PackageIcon>
+    <RepositoryUrl>https://github.com/melihercan/Xamarinme</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>xamarin .NET Core hosting</PackageTags>
+    <PackageReleaseNotes>First version.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="images\**" />
+    <EmbeddedResource Remove="images\**" />
+    <None Remove="images\**" />
+    <None Include="..\images\me.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.6" />
+  </ItemGroup>
+
+</Project>
