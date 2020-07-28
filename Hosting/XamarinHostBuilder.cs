@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using XamarinmeHosting;
 
 namespace Xamarinme
 {
@@ -19,7 +20,8 @@ namespace Xamarinme
 
         public static XamarinHostBuilder CreateDefault(string[] args = null)
         {
-            return null;
+            var builder = new XamarinHostBuilder(args);
+            return builder;
         }
 
         public XamarinHost Build()
@@ -27,5 +29,13 @@ namespace Xamarinme
             return null;
         }
         //public void ConfigureContainer<TBuilder>(IServiceProviderFactory<TBuilder> factory, Action<TBuilder> configure = null);
+
+
+        internal XamarinHostBuilder(string[] args)
+        {
+            Configuration = new XamarinHostConfiguration();
+            Services = new ServiceCollection();
+            Logging = new LoggingBuilder(Services);
+        }
     }
 }
