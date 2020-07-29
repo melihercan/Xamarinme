@@ -35,7 +35,14 @@ namespace Xamarinme
         {
             Configuration = new XamarinHostConfiguration();
             Services = new ServiceCollection();
+            HostEnvironment = InitializeEnvironment();
             Logging = new LoggingBuilder(Services);
+        }
+
+        private XamarinHostEnvironment InitializeEnvironment()
+        {
+            var hostEnvironment = new XamarinHostEnvironment("Production", "MyApp", "/");
+            return hostEnvironment;
         }
     }
 }

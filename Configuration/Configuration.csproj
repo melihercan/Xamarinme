@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Xamarinme.Configuration</PackageId>
+    <Authors>melihercan</Authors>
+    <Product>Xamarinme.Configuration</Product>
+    <Description>.NET Core embedded resource configuration provider for Xamarin.</Description>
+    <Copyright>melihercan 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>me.png</PackageIcon>
+    <RepositoryUrl>https://github.com/melihercan/Xamarinme</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>xamarin .net core configuration</PackageTags>
+    <PackageReleaseNotes>First version.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\images\me.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

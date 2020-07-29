@@ -13,7 +13,7 @@ It supports DependencyInjection, Configuration, Logging and Environment.</Descri
     <PackageIcon>me.png</PackageIcon>
     <RepositoryUrl>https://github.com/melihercan/Xamarinme</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>xamarin .NET Core hosting</PackageTags>
+    <PackageTags>xamarin .net core hosting</PackageTags>
     <PackageReleaseNotes>First version.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
