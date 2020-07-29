@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Xamarinme
@@ -8,9 +9,14 @@ namespace Xamarinme
     public static class EmbeddedResourceConfigurationExtensions
     {
         public static IConfigurationBuilder AddEmbeddedResource(this IConfigurationBuilder builder, 
-            string[] fileNames)
+            Assembly assembly, string defaultNamespace, string[] fileNames)
         {
-            builder.Add(new EmbeddedResourceConfigurationSource { FileNames = fileNames });
+            builder.Add(new EmbeddedResourceConfigurationSource 
+            { 
+                Assembly = assembly, 
+                DefaultNamespace = defaultNamespace,
+                FileNames = fileNames 
+            });
             return builder;
         }
 

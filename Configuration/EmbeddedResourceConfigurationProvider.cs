@@ -10,10 +10,14 @@ namespace Xamarinme
 {
     public class EmbeddedResourceConfigurationProvider : ConfigurationProvider
     {
+        private readonly Assembly _assembly;
+        private readonly string _defaultNamespace;
         private readonly IEnumerable<string> _fileNames;
 
-        public EmbeddedResourceConfigurationProvider(IEnumerable<string> fileNames)
+        public EmbeddedResourceConfigurationProvider(Assembly assembly, string defaultNamespace, IEnumerable<string> fileNames)
         {
+            _assembly = assembly;
+            _defaultNamespace = defaultNamespace;
             _fileNames = fileNames;
         }
 
@@ -25,17 +29,23 @@ namespace Xamarinme
             }
 
 
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = _assembly;//// Assembly.GetExecutingAssembly();
 
-            foreach( var fileName in _fileNames)
+            foreach (var fileName in _fileNames)
             {
-                var resourceFileName = assembly.GetName().Name + "." + _fileNames;
+                var resourceFileName = /*assembly.GetName().Name*/ _defaultNamespace + ".";
+                var fileFolder = Path.GetDirectoryName(fileName).ToLower();
+                if (!string.IsNullOrEmpty(fileFolder))
+                {
+                    resourceFileName += fileFolder + ".";
+                }
+                resourceFileName += fileName;
                 using (var readerStream = new StreamReader(assembly.GetManifestResourceStream(resourceFileName)))
                 {
                     var fileExtension = Path.GetExtension(fileName).ToLower();
                     switch (fileExtension)
                     {
-                        case "json":
+                        case ".json":
                             var kvList = JsonConvert.DeserializeObject<Dictionary<string, string>>
                                 (readerStream.ReadToEnd());
                             foreach (var kv in kvList)
