@@ -8,7 +8,7 @@ namespace Xamarinme
     public static class EmbeddedResourceConfigurationExtensions
     {
         public static IConfigurationBuilder AddEmbeddedResource(this IConfigurationBuilder builder, 
-            string[] fileNames = null)
+            string[] fileNames)
         {
             builder.Add(new EmbeddedResourceConfigurationSource { FileNames = fileNames });
             return builder;
