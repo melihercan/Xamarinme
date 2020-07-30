@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using XamarinmeConfiguration;
 
 namespace Xamarinme
 {
@@ -41,13 +42,12 @@ namespace Xamarinme
                 }
                 resourceFileName += fileName;
 
-                using (var readerStream = new StreamReader(_assembly.GetManifestResourceStream(resourceFileName)))
+                using (var stream = _assembly.GetManifestResourceStream(resourceFileName))
                 {
                     switch (fileExtension)
                     {
                         case ".json":
-                            var kvList = JsonConvert.DeserializeObject<Dictionary<string, string>>
-                                (readerStream.ReadToEnd());
+                            var kvList = JsonConfigurationFileParser.Parse(stream);
                             foreach (var kv in kvList)
                             {
                                 Data.Add(kv.Key, kv.Value);
