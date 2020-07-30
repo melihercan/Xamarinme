@@ -81,7 +81,7 @@ fileNames | string[] | The list of config file names.
 
 Parameter | Type | Description
 --- | --- | ---
-configureSource | EmbeddedResourceConfigurationSource | Callback to action to set `EmbeddedResourceConfigurationSource` parameters: `Assembly`, `DefaultNamespace` and `FileNames`.
+configureSource | Action<EmbeddedResourceConfigurationSource> | Callback to action to set `EmbeddedResourceConfigurationSource` parameters: `Assembly`, `DefaultNamespace` and `FileNames`.
 
 
 ## Usage
