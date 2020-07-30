@@ -6,7 +6,8 @@
     <PackageId>Xamarinme.Configuration</PackageId>
     <Authors>melihercan</Authors>
     <Product>Xamarinme.Configuration</Product>
-    <Description>.NET Core embedded resource configuration provider for Xamarin.</Description>
+    <Description>Bringing .NET Core Configuration feature into Xamarin. 
+Use appsettings.json file just like in ASP.NET apps to provide configuration parameters to Xamarin apps.</Description>
     <Copyright>melihercan 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>me.png</PackageIcon>
