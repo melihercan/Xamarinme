@@ -28,7 +28,7 @@ Xamarin do not have such support out of the box. This library is aiming to fill 
 ```cs
     public partial class App : Application
     {
-        public static IConfiguration Configuration { get; private set}
+        public static IConfiguration Configuration { get; private set; }
 
         public App()
         {
@@ -41,6 +41,20 @@ Xamarin do not have such support out of the box. This library is aiming to fill 
         }
         ...
 ```
+* From now on you can access the `App.Configuration` parameter anywhere in the project to read the configuration values, for example in `MainPage`:
+```cs
+        public MainPage()
+        {
+            var c1 = App.Configuration["Environment"];                  // "Development"
+            var c2 = App.Configuration["Logging:IncludeScopes"];        // false
+            var c3 = App.Configuration["Logging:LogLevel:Default"];     // "Debug"
+            var c4 = App.Configuration["Logging:LogLevel:System"];      // "Information"
+            var c5 = App.Configuration["Logging:LogLevel:Microsoft"];   // "Information"
+
+            InitializeComponent();
+        }
+```
+
 
 
 
