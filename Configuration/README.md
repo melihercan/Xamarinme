@@ -58,7 +58,7 @@ Xamarin do not have such support out of the box. This library is aiming to fill 
 ## Points to Consider
 * The library can be used either on Shared or on Platform projects, or even both with separate instances.
 * Currently only `JSON` format is supported. Planning to add `XML` soon.
-* `AddEmbeddedResource` needs reference to the assembly that contains the config files as well as default namespace beside the obvious parameter of file list. The assembly can be detected in the library itself by using reflection but it can be tricky as we are supporting both shared and platform specific projects. It is better off specified by the user. Similar story on default namespace. Although some tricks could be used to get it with reflection, again better off specifed by the user as it is a VS2019 setting.
+* `AddEmbeddedResource` needs a reference to the assembly that contains the config files as well as default namespace beside the obvious parameter of file list. The assembly can be detected in the library itself by using reflection but it can be tricky as we are supporting both shared and platform specific projects. It is better off specified by the user. Similar story on default namespace. Although some tricks could be used to get it with reflection, again better off specifed by the user as it is a VS2019 setting.
 * When specifying file list, add the folders to the file names if the file is not at the root. For example:
 `resource/appsettings.json`, `x/y/z/appsettings.json`.
 * On a multiple files cases, the previous setting will be overwritten if the current file also specifes the same key. Hence the order of file list is important.
