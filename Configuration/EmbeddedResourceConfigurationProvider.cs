@@ -1,10 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using XamarinmeConfiguration;
 
 namespace Xamarinme
@@ -24,11 +21,6 @@ namespace Xamarinme
 
         public override void Load()
         {
-            if (_fileNames == null)
-            {
-                return;
-            }
-
             foreach (var fullFileName in _fileNames)
             {
                 var fileFolder = Path.GetDirectoryName(fullFileName).ToLower().Replace('/', '.').Replace('\\', '.');
@@ -54,12 +46,14 @@ namespace Xamarinme
                             }
                             break;
 
-                        case ".xml":
-                            break;
+                        ////case ".xml":
+                            ////break;
+
+                        default:
+                            throw new FileNotFoundException($"Unsupported file extension {fileExtension} specified");
                     }
                 }
             }
-
         }
     }
 }
