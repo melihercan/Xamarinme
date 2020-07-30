@@ -28,21 +28,21 @@ namespace Xamarinme
                 return;
             }
 
-
-            var assembly = _assembly;//// Assembly.GetExecutingAssembly();
-
-            foreach (var fileName in _fileNames)
+            foreach (var fullFileName in _fileNames)
             {
-                var resourceFileName = /*assembly.GetName().Name*/ _defaultNamespace + ".";
-                var fileFolder = Path.GetDirectoryName(fileName).ToLower();
+                var fileFolder = Path.GetDirectoryName(fullFileName).ToLower().Replace('/', '.').Replace('\\', '.');
+                var fileName = Path.GetFileName(fullFileName).ToLower();
+                var fileExtension = Path.GetExtension(fullFileName).ToLower();
+
+                var resourceFileName = _defaultNamespace + ".";
                 if (!string.IsNullOrEmpty(fileFolder))
                 {
                     resourceFileName += fileFolder + ".";
                 }
                 resourceFileName += fileName;
-                using (var readerStream = new StreamReader(assembly.GetManifestResourceStream(resourceFileName)))
+
+                using (var readerStream = new StreamReader(_assembly.GetManifestResourceStream(resourceFileName)))
                 {
-                    var fileExtension = Path.GetExtension(fileName).ToLower();
                     switch (fileExtension)
                     {
                         case ".json":
@@ -54,7 +54,7 @@ namespace Xamarinme
                             }
                             break;
 
-                        case "xml":
+                        case ".xml":
                             break;
                     }
                 }
