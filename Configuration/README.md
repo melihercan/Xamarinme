@@ -91,7 +91,7 @@ using Microsoft.Extensions.Configuration;
 using Xamarinme;
 ```
 
- Add `AddEmbeddedResource` into the `ConfigurationBuilder` object.
+* Add `AddEmbeddedResource` into the `ConfigurationBuilder` object.
 
 
 
