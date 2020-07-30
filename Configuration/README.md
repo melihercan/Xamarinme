@@ -64,6 +64,35 @@ Xamarin do not have such support out of the box. This library is aiming to fill 
 * On a multiple files cases, the previous setting will be overwritten if the current file also specifes the same key. Hence the order of file list is important.
 * Environment files should be specified manually in the file list as Configuration module has no idea what environment we are running on. 
 
+## Installation
+Install the NuGet packet `Xamarinme.Configuration` with VS2019 or by Package Manager Console:
+
+`Install-Package Xamarinme.Configuration`
+
+## API
+* `AddEmbeddedResource(Assembly, string, string[])` 
+
+Parameter | Type | Description
+--- | --- | ---
+assembly | Assembly | Assembly of the project that holds the config files.
+defaultNamespace | string | Default namespace of the project that holds the config files.
+fileNames | string[] | The list of config file names.
+* `AddEmbeddedResource(Action<EmbeddedResourceConfigurationSource>)` 
+
+Parameter | Type | Description
+--- | --- | ---
+configureSource | EmbeddedResourceConfigurationSource | Callback to action to set `EmbeddedResourceConfigurationSource` parameters: `Assembly`, `DefaultNamespace` and `FileNames`.
+
+
+## Usage
+* Add usings 
+```cs
+using Microsoft.Extensions.Configuration;
+using Xamarinme;
+```
+
+ Add `AddEmbeddedResource` into the `ConfigurationBuilder` object.
+
 
 
 
