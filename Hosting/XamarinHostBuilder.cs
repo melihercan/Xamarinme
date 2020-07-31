@@ -41,7 +41,15 @@ namespace Xamarinme
 
         private XamarinHostEnvironment InitializeEnvironment()
         {
-            var hostEnvironment = new XamarinHostEnvironment("Production", "MyApp", "/");
+            // "ASPNETCORE_ENVIRONMENT" has priority over "DOTNET_ENVIRONMENT".
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ??
+                Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ??
+                Microsoft.Extensions.Hosting.Environments.Production;
+            var hostEnvironment = new XamarinHostEnvironment(environment);
+            Services.AddSingleton<IXamarinHostEnvironment>(hostEnvironment);
+
+
+            
             return hostEnvironment;
         }
     }

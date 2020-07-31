@@ -12,9 +12,5 @@ namespace Xamarinme
         /// Configured to "Production" when not specified by the host.
         /// </summary>
         string Environment { get; }
-
-        string Application { get; }
-
-        string RootPath { get; }
     }
 }

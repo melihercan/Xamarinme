@@ -7,17 +7,11 @@ namespace XamarinmeHosting
 {
     internal class XamarinHostEnvironment : IXamarinHostEnvironment
     {
-        public XamarinHostEnvironment(string environment, string application, string rootPath)
+        public XamarinHostEnvironment(string environment)
         {
             Environment = environment;
-            Application = application;
-            RootPath = rootPath;
         }
 
         public string Environment { get; }
-
-        public string Application { get; }
-
-        public string RootPath { get; }
     }
 }
