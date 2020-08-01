@@ -16,6 +16,8 @@ Use appsettings.json file just like in ASP.NET apps to provide configuration par
     <PackageTags>xamarin .net core configuration</PackageTags>
     <PackageReleaseNotes>First version.</PackageReleaseNotes>
     <RootNamespace>XamarinmeConfiguration</RootNamespace>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
