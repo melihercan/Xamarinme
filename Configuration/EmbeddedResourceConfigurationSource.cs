@@ -8,11 +8,10 @@ namespace Xamarinme
 {
     public class EmbeddedResourceConfigurationSource : IConfigurationSource
     {
-        public Assembly Assembly { get; set; }
-        public string DefaultNamespace { get; set; }
-        public IEnumerable<string> FileNames { get; set; }
+        public EmbeddedResourceConfigurationOptions Options { get; set; }
+        public string Environment { get; set; } = "Production";
 
         public IConfigurationProvider Build(IConfigurationBuilder builder) => 
-            new EmbeddedResourceConfigurationProvider(Assembly, DefaultNamespace, FileNames);
+            new EmbeddedResourceConfigurationProvider(Options, Environment);
     }
 }

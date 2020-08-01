@@ -48,8 +48,14 @@ namespace Xamarinme
             var hostEnvironment = new XamarinHostEnvironment(environment);
             Services.AddSingleton<IXamarinHostEnvironment>(hostEnvironment);
 
-
+            var configFiles = new[]
+            {
+                "appsettings.json",
+                $"appsettings.{environment}.json"
+            };
             
+
+
             return hostEnvironment;
         }
     }

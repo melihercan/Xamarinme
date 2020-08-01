@@ -8,49 +8,41 @@ namespace Xamarinme
 {
     public class EmbeddedResourceConfigurationProvider : ConfigurationProvider
     {
-        private readonly Assembly _assembly;
-        private readonly string _defaultNamespace;
-        private readonly IEnumerable<string> _fileNames;
+        private readonly EmbeddedResourceConfigurationOptions _options;
+        private readonly string _environment;
 
-        public EmbeddedResourceConfigurationProvider(Assembly assembly, string defaultNamespace, IEnumerable<string> fileNames)
+        public EmbeddedResourceConfigurationProvider(EmbeddedResourceConfigurationOptions options, string environment)
         {
-            _assembly = assembly;
-            _defaultNamespace = defaultNamespace;
-            _fileNames = fileNames;
+            _options = options;
+            _environment = environment;
         }
 
         public override void Load()
         {
-            foreach (var fullFileName in _fileNames)
+            var configFiles = new[]
             {
-                var fileFolder = Path.GetDirectoryName(fullFileName).ToLower().Replace('/', '.').Replace('\\', '.');
-                var fileName = Path.GetFileName(fullFileName).ToLower();
-                var fileExtension = Path.GetExtension(fullFileName).ToLower();
+                $"{_options.Prefix}.appsettings.json",
+                $"{_options.Prefix}.appsettings.{_environment}.json"
+            };
 
-                var resourceFileName = _defaultNamespace + ".";
-                if (!string.IsNullOrEmpty(fileFolder))
+            foreach (var configFile in configFiles)
+            {
+                if (_options.Assembly.GetManifestResourceInfo(configFile) != null)
                 {
-                    resourceFileName += fileFolder + ".";
-                }
-                resourceFileName += fileName;
-
-                using (var stream = _assembly.GetManifestResourceStream(resourceFileName))
-                {
-                    switch (fileExtension)
+                    using (var stream = _options.Assembly.GetManifestResourceStream(configFile))
                     {
-                        case ".json":
-                            var kvList = JsonConfigurationFileParser.Parse(stream);
-                            foreach (var kv in kvList)
+                        var kvList = JsonConfigurationFileParser.Parse(stream);
+                        foreach (var kv in kvList)
+                        {
+                            if (Data.ContainsKey(kv.Key))
+                            {
+                                Data[kv.Key] = kv.Value;
+                            }
+                            else
                             {
                                 Data.Add(kv.Key, kv.Value);
                             }
-                            break;
-
-                        ////case ".xml":
-                            ////break;
-
-                        default:
-                            throw new FileNotFoundException($"Unsupported file extension {fileExtension} specified");
+                        }
                     }
                 }
             }

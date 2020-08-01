@@ -7,19 +7,19 @@ namespace Xamarinme
     public static class EmbeddedResourceConfigurationExtensions
     {
         public static IConfigurationBuilder AddEmbeddedResource(this IConfigurationBuilder builder, 
-            Assembly assembly, string defaultNamespace, string[] fileNames)
+            EmbeddedResourceConfigurationOptions options, string environment = "Production")
         {
             builder.Add(new EmbeddedResourceConfigurationSource 
             { 
-                Assembly = assembly, 
-                DefaultNamespace = defaultNamespace,
-                FileNames = fileNames 
+                Options = options,
+                Environment = environment
             });
             return builder;
         }
 
+
         public static IConfigurationBuilder AddEmbeddedResource(this IConfigurationBuilder builder,
-            Action<EmbeddedResourceConfigurationSource> configureSource)
-                => builder.Add(configureSource);
+            Action<EmbeddedResourceConfigurationSource> configurationSource)
+                => builder.Add(configurationSource);
     }
 }
