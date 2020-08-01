@@ -96,10 +96,10 @@ Parameter | Type | Description
 --- | --- | ---
 options | EmbeddedResourceConfigurationOptions | Options for embedded resource configuration.
 environment | string | App running environment: "Development", Staging", "Production" or custom defined string
-### AddEmbeddedResource(Action<EmbeddedResourceConfigurationSource>) 
+### AddEmbeddedResource(configurationSource) 
 Parameter | Type | Description
 --- | --- | ---
-configureSource | Action<EmbeddedResourceConfigurationSource> | Callback to action to set `EmbeddedResourceConfigurationSource` parameters.
+configurationSource | Action | Callback to action with `EmbeddedResourceConfigurationSource` as parameter.
 
 ## Usage
 * Add usings 
