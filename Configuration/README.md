@@ -3,7 +3,7 @@
 
 Xamarin do not have such support out of the box. This library is aiming to fill this shortage by implementing an embedded resource configuration provider.
 
-.NET Core have a modular, pluggable, and extensible Configuration building block architecture that can be customized and implemented on other platforms and Xamarin is no exception. Configuration in .NET Core is performed using one or more configuration providers. Configuration providers read configuration data from key-value pairs using a variety of configuration sources. In this library, settings files, `appsettings.json` and `appsettings.{environment}.json` configuration source scheme is being used. The mechanism is simple:
+.NET Core have a modular, pluggable, and extensible Configuration building block architecture that can be customized and implemented on other platforms and Xamarin is no exception. Configuration in .NET Core is performed using one or more configuration providers. Configuration providers read configuration data from key-value pairs using a variety of configuration sources. In this library, settings files, `appsettings.json` and `appsettings.{environment}.json` configuration source scheme is being used. The flow is simple:
 * User creates configuration JSON file(s) in shared or native project(s).
 * Mark them as embedded resource, so that they will be embedded in the final build as resources.
 * The library provides `AddEmbeddedResource` configuration extension method that accepts `configuration options` and optional `environment` string (`"Production"` is default) parameters. User simply creates and builds a new `ConfigurationBuilder` object by providing `AddEmbeddedResource` to the builder.
