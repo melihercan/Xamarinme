@@ -62,7 +62,7 @@ Xamarin do not have such support out of the box. This library is aiming to fill 
 
     default namespace: "App5" and config files are on the root folder => prefix = "App5"
     
-    default namespace: "App5" and config are on nested folders "x/y"    => prefix = "App5.x.y"
+    default namespace: "App5" and config files are on nested folders "x/y"    => prefix = "App5.x.y"
 
 ## Installation
 Install the NuGet packet `Xamarinme.Configuration` with VS2019 or by Package Manager Console:
@@ -70,6 +70,24 @@ Install the NuGet packet `Xamarinme.Configuration` with VS2019 or by Package Man
 `Install-Package Xamarinme.Configuration`
 
 ## API
+### EmbeddedResourceConfigurationOptions
+```cs
+    public class EmbeddedResourceConfigurationOptions
+    {
+        // Assembly that contains the config files.
+        public Assembly Assembly { get; set; }
+
+        // Prefix to embedded resource files.
+        //  Format: <default namespace>.<nested folders that contain config files each separated with dots>
+        //  Examples:
+        //          default namespace: "MyApp",     config files are on root folder         => Prefix = "MyApp"
+        //          default namespace: "MyApp",     config files are on "res" folder        => Prefix = "MyApp.res"
+        //          default namespace: "MyApp",     config files are on "res/x/y" folder    => Prefix = "MyApp.res.x.y"
+        //          default namespace: "MyApp.iOS", config files are on "res/x/y" folder    => Prefix = "MyApp.iOS.res.x.y"
+        public string Prefix { get; set; }
+    }
+```
+
 * `AddEmbeddedResource(Assembly, string, string[])` 
 
 Parameter | Type | Description
