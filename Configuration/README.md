@@ -61,8 +61,8 @@ Xamarin do not have such support out of the box. This library is aiming to fill 
 * When specifying prefix, concatenate default name space and config file folders each separated with a dot. For example:
 
     default namespace: "App5" and config files are on the root folder => prefix = "App5"
-
-    default namespace: "App5" and config are on nested folders x/y    => prefix = "App5.x.y"
+    
+    default namespace: "App5" and config are on nested folders "x/y"    => prefix = "App5.x.y"
 
 ## Installation
 Install the NuGet packet `Xamarinme.Configuration` with VS2019 or by Package Manager Console:
