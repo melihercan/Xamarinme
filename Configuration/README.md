@@ -45,7 +45,7 @@ Xamarin do not have such support out of the box. This library is aiming to fill 
 ```cs
         public MainPage()
         {
-            var c1 = App.Configuration["Environment"];                  // "Development"
+            var c1 = App.Configuration["Build"];                        // "Development"
             var c2 = App.Configuration["Logging:IncludeScopes"];        // false
             var c3 = App.Configuration["Logging:LogLevel:Default"];     // "Debug"
             var c4 = App.Configuration["Logging:LogLevel:System"];      // "Information"
@@ -80,20 +80,26 @@ Install the NuGet packet `Xamarinme.Configuration` with VS2019 or by Package Man
         public string Prefix { get; set; }
     }
 ```
+### EmbeddedResourceConfigurationSource
+```cs
+    public class EmbeddedResourceConfigurationSource : IConfigurationSource
+    {
+        public EmbeddedResourceConfigurationOptions Options { get; set; }
+        public string Environment { get; set; } = "Production";
 
-* `AddEmbeddedResource(Assembly, string, string[])` 
-
+        public IConfigurationProvider Build(IConfigurationBuilder builder) => 
+            new EmbeddedResourceConfigurationProvider(Options, Environment);
+    }
+```
+### AddEmbeddedResource(options, environment) 
 Parameter | Type | Description
 --- | --- | ---
-assembly | Assembly | Assembly of the project that holds the config files.
-defaultNamespace | string | Default namespace of the project that holds the config files.
-fileNames | string[] | The list of config file names.
-* `AddEmbeddedResource(Action<EmbeddedResourceConfigurationSource>)` 
-
+options | EmbeddedResourceConfigurationOptions | Options for embedded resource configuration.
+environment | string | App running environment: "Development", Staging", "Production" or custom defined string
+### AddEmbeddedResource(Action<EmbeddedResourceConfigurationSource>) 
 Parameter | Type | Description
 --- | --- | ---
-configureSource | Action<EmbeddedResourceConfigurationSource> | Callback to action to set `EmbeddedResourceConfigurationSource` parameters: `Assembly`, `DefaultNamespace` and `FileNames`.
-
+configureSource | Action<EmbeddedResourceConfigurationSource> | Callback to action to set `EmbeddedResourceConfigurationSource` parameters.
 
 ## Usage
 * Add usings 
@@ -101,7 +107,6 @@ configureSource | Action<EmbeddedResourceConfigurationSource> | Callback to acti
 using Microsoft.Extensions.Configuration;
 using Xamarinme;
 ```
-
 * Add `AddEmbeddedResource` into the `ConfigurationBuilder` object.
 
 
