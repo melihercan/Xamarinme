@@ -57,12 +57,10 @@ Xamarin do not have such support out of the box. This library is aiming to fill 
 
 ## Notes
 * The library can be used either on Shared or on Platform projects, or even both with separate instances.
-* Currently only `JSON` format is supported. Planning to add `XML` soon.
-* `AddEmbeddedResource` needs a reference to the assembly that contains the config files as well as default namespace beside the obvious parameter of file list. The assembly can be detected in the library itself by using reflection but it can be tricky as we are supporting both shared and platform specific projects. It is better off specified by the user. Similar story on default namespace. Although some tricks could be used to get it with reflection, again better off specifed by the user as it is a VS2019 setting.
-* When specifying file list, add the folders to the file names if the file is not at the root. For example:
-`resource/appsettings.json`, `x/y/z/appsettings.json`.
-* On multiple files cases, the previous setting will be overwritten if the current file also specifes the same key. Hence the order of file list is important.
-* Environment files should be specified manually in the file list as Configuration module has no idea what environment we are running on. 
+* `AddEmbeddedResource` needs a reference to the assembly that contains the config files as well as embedded resource prefix as configuration options. The assembly can be detected in the library itself by using reflection but it will cause additional execution time as all assemblies shall be enumerated. It is better off specified by the user. Similar story on prefix. Prefix is concatanation of assembly default name space and folder names where the config files are taking place. Although some tricks could be used to get it with reflection, again better off specifed by the user as it is a VS2019 setting. Another optional parameter, environment specifies which environment specific json file to use; "Production" is default.
+* When specifying prefix, concatenate default name space and config file folders each separated with a dot. For example:
+default namespace: "App5" and config files are on the root folder => prefix = "App5"
+default namespace: "App5" and config are on nested folders x/y    => prefix = "App5.x.y"
 
 ## Installation
 Install the NuGet packet `Xamarinme.Configuration` with VS2019 or by Package Manager Console:
