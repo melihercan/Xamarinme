@@ -18,9 +18,9 @@ namespace Xamarinme
         public IXamarinHostEnvironment HostEnvironment { get; }
         public ILoggingBuilder Logging { get; }
 
-        public static XamarinHostBuilder CreateDefault(string[] args = null)
+        public static XamarinHostBuilder CreateDefault(EmbeddedResourceConfigurationOptions configurationOptions)
         {
-            var builder = new XamarinHostBuilder(args);
+            var builder = new XamarinHostBuilder(configurationOptions);
             return builder;
         }
 
@@ -31,12 +31,33 @@ namespace Xamarinme
         //public void ConfigureContainer<TBuilder>(IServiceProviderFactory<TBuilder> factory, Action<TBuilder> configure = null);
 
 
-        internal XamarinHostBuilder(string[] args)
+        internal XamarinHostBuilder(EmbeddedResourceConfigurationOptions configurationOptions)
         {
             Configuration = new XamarinHostConfiguration();
             Services = new ServiceCollection();
             HostEnvironment = InitializeEnvironment();
             Logging = new LoggingBuilder(Services);
+
+            Configuration
+                .Add(new EmbeddedResourceConfigurationSource 
+                { 
+                    Options = configurationOptions, 
+                    Environment = HostEnvironment.Environment 
+                })
+                .Build();
+
+            ////            InitializeDefaultServices();
+            Logging.AddConfiguration(Configuration.GetSection("Logging"));
+            Logging.AddConsole();
+        }
+
+        private void InitializeDefaultServices()
+        {
+            Services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+                loggingBuilder.AddConsole();
+            });
         }
 
         private XamarinHostEnvironment InitializeEnvironment()
@@ -47,14 +68,6 @@ namespace Xamarinme
                 Microsoft.Extensions.Hosting.Environments.Production;
             var hostEnvironment = new XamarinHostEnvironment(environment);
             Services.AddSingleton<IXamarinHostEnvironment>(hostEnvironment);
-
-            var configFiles = new[]
-            {
-                "appsettings.json",
-                $"appsettings.{environment}.json"
-            };
-            
-
 
             return hostEnvironment;
         }

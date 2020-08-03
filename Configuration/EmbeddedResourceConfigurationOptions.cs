@@ -7,11 +7,11 @@ namespace Xamarinme
 {
     public class EmbeddedResourceConfigurationOptions
     {
-        // Assembly that containes the config files.
+        // Assembly that contains the config files.
         public Assembly Assembly { get; set; }
 
         // Prefix to embedded resource files.
-        //  Format: <default namespace>.<folders each separated with dots>
+        //  Format: <default namespace>.<nested folders that contain config files each separated with dots>
         //  Examples:
         //          default namespace: "MyApp",     config files are on root folder         => Prefix = "MyApp"
         //          default namespace: "MyApp",     config files are on "res" folder        => Prefix = "MyApp.res"
