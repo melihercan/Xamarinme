@@ -16,6 +16,8 @@ namespace Xamarinme
         public XamarinHostConfiguration Configuration { get; }
         public IServiceCollection Services { get; }
         public IXamarinHostEnvironment HostEnvironment { get; }
+        public ILoggingBuilder Logging { get; private set; }
+
 
         public static XamarinHostBuilder CreateDefault(EmbeddedResourceConfigurationOptions configurationOptions)
         {
@@ -45,7 +47,8 @@ namespace Xamarinme
                 .Build();
 
             Services.AddLogging(loggingBuilder => 
-            { 
+            {
+                Logging = loggingBuilder;
                 loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
                 loggingBuilder.AddDebug();
             });
