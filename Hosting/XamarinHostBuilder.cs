@@ -14,10 +14,8 @@ namespace Xamarinme
 
 
         public XamarinHostConfiguration Configuration { get; }
-        ////public RootComponentMappingCollection RootComponents { get; }
         public IServiceCollection Services { get; }
         public IXamarinHostEnvironment HostEnvironment { get; }
-        public ILoggingBuilder Logging { get; }
 
         public static XamarinHostBuilder CreateDefault(EmbeddedResourceConfigurationOptions configurationOptions)
         {
@@ -49,7 +47,7 @@ namespace Xamarinme
             Services.AddLogging(loggingBuilder => 
             { 
                 loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
-                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
             });
         }
 
@@ -58,7 +56,7 @@ namespace Xamarinme
             // "ASPNETCORE_ENVIRONMENT" has priority over "DOTNET_ENVIRONMENT".
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ??
                 Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ??
-                Microsoft.Extensions.Hosting.Environments.Production;
+                Environments.Production;
             var hostEnvironment = new XamarinHostEnvironment(environment);
             Services.AddSingleton<IXamarinHostEnvironment>(hostEnvironment);
 
