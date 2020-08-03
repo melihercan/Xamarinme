@@ -6,6 +6,6 @@
              mc:Ignorable="d"
              x:Class="DemoApp.App">
     <Application.Resources>
-        
+
     </Application.Resources>
 </Application>

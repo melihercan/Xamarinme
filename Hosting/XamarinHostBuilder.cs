@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -24,19 +25,18 @@ namespace Xamarinme
             return builder;
         }
 
-        public XamarinHost Build()
+        public IHost Build()
         {
-            return null;
-        }
-        //public void ConfigureContainer<TBuilder>(IServiceProviderFactory<TBuilder> factory, Action<TBuilder> configure = null);
+            Services.AddSingleton<IConfiguration>(Configuration);
 
+            return new XamarinHost(Services.BuildServiceProvider());
+        }
 
         internal XamarinHostBuilder(EmbeddedResourceConfigurationOptions configurationOptions)
         {
             Configuration = new XamarinHostConfiguration();
             Services = new ServiceCollection();
             HostEnvironment = InitializeEnvironment();
-            Logging = new LoggingBuilder(Services);
 
             Configuration
                 .Add(new EmbeddedResourceConfigurationSource 
@@ -46,15 +46,8 @@ namespace Xamarinme
                 })
                 .Build();
 
-            ////            InitializeDefaultServices();
-            Logging.AddConfiguration(Configuration.GetSection("Logging"));
-            Logging.AddConsole();
-        }
-
-        private void InitializeDefaultServices()
-        {
-            Services.AddLogging(loggingBuilder =>
-            {
+            Services.AddLogging(loggingBuilder => 
+            { 
                 loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
                 loggingBuilder.AddConsole();
             });
