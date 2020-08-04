@@ -1,23 +1,30 @@
-﻿using Microsoft.Extensions.Hosting;
-using System;
-using System.Reflection;
+﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using DemoApp.Services;
+using DemoApp.Views;
+using Microsoft.Extensions.Hosting;
 using Xamarinme;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
 namespace DemoApp
 {
     public partial class App : Application
     {
+        public static IConfiguration Configuration { get; private set; }
         public static IHost Host { get; private set; }
+
 
         public App()
         {
+            InitializeXamarinConfiguration();
             InitializeXamarinHostBuilder();
 
             InitializeComponent();
 
-            MainPage = new MainPage();
+            DependencyService.Register<MockDataStore>();
+            MainPage = new AppShell();
         }
 
         protected override void OnStart()
@@ -30,6 +37,17 @@ namespace DemoApp
 
         protected override void OnResume()
         {
+        }
+
+        private void InitializeXamarinConfiguration()
+        {
+            Configuration = new ConfigurationBuilder()
+            .AddEmbeddedResource(new EmbeddedResourceConfigurationOptions 
+            { 
+                Assembly = Assembly.GetExecutingAssembly(), 
+                Prefix = "DemoApp" 
+            })
+            .Build();
         }
 
         private void InitializeXamarinHostBuilder()
