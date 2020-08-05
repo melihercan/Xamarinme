@@ -33,7 +33,7 @@ Xamarin do not have such support out of the box. This library is aiming to fill 
         public App()
         {
             Configuration = new ConfigurationBuilder()
-                .AddEmbeddedResource(new EmbeddedResourceConfigurationOptions { Assembly = Assembly.GetExecutingAssembly(), Prefix = "App5" }) 
+                .AddEmbeddedResource(new EmbeddedResourceConfigurationOptions { Assembly = Assembly.GetExecutingAssembly(), Prefix = "MyApp" }) 
                 .Build();
 
             InitializeComponent();
