@@ -6,11 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.json" />
     <None Remove="Fonts\fa-solid-900.ttf" />
     <None Remove="Fonts\materialdesignicons-webfont.ttf" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="appsettings.json" />
     <EmbeddedResource Include="Fonts\fa-solid-900.ttf" />
     <EmbeddedResource Include="Fonts\materialdesignicons-webfont.ttf" />
   </ItemGroup>

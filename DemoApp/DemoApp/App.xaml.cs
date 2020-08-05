@@ -22,8 +22,6 @@ namespace DemoApp
             InitializeXamarinHostBuilder();
 
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 
