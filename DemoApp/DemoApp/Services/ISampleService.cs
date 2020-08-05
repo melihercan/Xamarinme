@@ -1,11 +1,16 @@
-﻿using System;
+﻿using DemoApp.Models;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarinme;
 
 namespace DemoApp.Services
 {
     public interface ISampleService
     {
-        void Execute();
+        IEnumerable<ConfigurationItem> GetConfigurationItems();
+        IXamarinHostEnvironment GetXamarinHostEnvironment();
+        ILogger<SampleService> GetSampleLogger();
     }
 }

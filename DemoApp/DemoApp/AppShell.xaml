@@ -43,8 +43,11 @@
         </StackLayout>
     </Shell.FlyoutHeader>
 
-    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Title="Configuration"
+    <FlyoutItem Route="demoapp"
+                Title="DemoApp"
+                FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent Route="configuration"
+                      Title="Configuration"
                       ContentTemplate="{DataTemplate local:ConfigurationPage}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FaFont"
@@ -53,15 +56,38 @@
                                  Color="#283e4a"/>
             </ShellContent.Icon>
         </ShellContent>
-        <ShellContent Title="Hosting" 
-                      ContentTemplate="{DataTemplate local:HostingPage}">
-            <ShellContent.Icon>
+        <Tab Route="hosting"
+             Title="Hosting">
+            <Tab.Icon>
                 <FontImageSource FontFamily="FaFont"
                                  Glyph="&#xf108;"
                                  Size="50"
                                  Color="#283e4a"/>
-            </ShellContent.Icon>
-        </ShellContent>
+            </Tab.Icon>
+        
+            <ShellContent Route="internal"
+                          Title="Internal" 
+                          ContentTemplate="{DataTemplate local:InternalHostingPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="FaFont"
+                                     Glyph="&#xf108;"
+                                     Size="50"
+                                     Color="#283e4a"/>
+                </ShellContent.Icon>
+            </ShellContent>
+
+            <ShellContent Route="service"
+                          Title="Service" 
+                          ContentTemplate="{DataTemplate local:ServiceHostingPage}">
+                <ShellContent.Icon>
+                    <FontImageSource FontFamily="FaFont"
+                                     Glyph="&#xf108;"
+                                     Size="50"
+                                     Color="#283e4a"/>
+                </ShellContent.Icon>
+            </ShellContent>
+
+        </Tab>
 
     </FlyoutItem>
 
