@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace DemoApp.Views
         public ServiceHostingPage()
         {
             InitializeComponent();
+            BindingContext = new ServiceHostingViewModel();
         }
     }
 }

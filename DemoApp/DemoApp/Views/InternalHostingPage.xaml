@@ -8,9 +8,22 @@
              x:Class="DemoApp.Views.InternalHostingPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+
+            <ListView ItemsSource="{Binding ConfigurationItems}" BackgroundColor="White" HasUnevenRows="true" 
+                      SeparatorVisibility="None" VerticalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Spacing="0" BackgroundColor="{Binding BackgroundColor}">
+                                <Label Text="{Binding Key}" FontAttributes="Bold" />
+                                <Label Text="{Binding Value}" FontSize="Small" VerticalOptions="End" />
+                                <!--<Label Text="{Binding Text}" FontSize="Small"/>-->
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

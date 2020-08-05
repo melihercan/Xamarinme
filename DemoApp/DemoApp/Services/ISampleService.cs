@@ -1,4 +1,5 @@
 ﻿using DemoApp.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,8 @@ namespace DemoApp.Services
 {
     public interface ISampleService
     {
-        IEnumerable<ConfigurationItem> GetConfigurationItems();
-        IXamarinHostEnvironment GetXamarinHostEnvironment();
         ILogger<SampleService> GetSampleLogger();
+        IXamarinHostEnvironment GetXamarinHostEnvironment();
+        IConfiguration GetConfiguration();
     }
 }

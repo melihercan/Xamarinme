@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Xamarinme;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DemoApp
 {
@@ -55,6 +56,8 @@ namespace DemoApp
                 Assembly = Assembly.GetExecutingAssembly(),
                 Prefix = "DemoApp"
             });
+
+            hostBuilder.Services.AddSingleton<ISampleService, SampleService>();
 
             Host = hostBuilder.Build();
         }
