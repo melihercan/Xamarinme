@@ -6,8 +6,10 @@
              mc:Ignorable="d"
              x:Class="DemoApp.Components.Hosting">
 
+    <Label Text="{Binding Environment}"/>
+
     <ListView ItemsSource="{Binding ConfigurationItems}" BackgroundColor="White" HasUnevenRows="true" 
-                      SeparatorVisibility="None" VerticalOptions="FillAndExpand">
+              SeparatorVisibility="None" VerticalOptions="FillAndExpand">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -20,5 +22,6 @@
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
+
 
 </StackLayout>

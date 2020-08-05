@@ -1,0 +1,94 @@
+﻿using DemoApp.Models;
+using DemoApp.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
+using Xamarinme;
+
+namespace DemoApp.ViewModels
+{
+    public class HostingViewModel<T> : INotifyPropertyChanged where T: class 
+    {
+        public ObservableCollection<ConfigurationItem> ConfigurationItems { get; set; }
+
+        private readonly ILogger<T> _logger;
+        private readonly IXamarinHostEnvironment _environment;
+        private readonly IConfiguration _configuration;
+        private readonly ISampleService _sampleService;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private string environment;
+        public string Environment
+        {
+            get { return environment; }
+            set 
+            { 
+                environment = value; 
+                OnPropertyChanged(); 
+            }
+        }
+        void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public HostingViewModel(ILogger<T> logger, IXamarinHostEnvironment environment, 
+            IConfiguration configuration, ISampleService sampleService)
+        {
+            _logger = logger;
+            _environment = environment;
+            _configuration = configuration;
+            _sampleService = sampleService;
+
+            Environment = _environment.Environment;
+
+            ConfigurationItems = new ObservableCollection<ConfigurationItem>
+            {
+                new ConfigurationItem
+                {
+                    Key = "Build",
+                    Value = $"{App.Configuration["Build"]}"
+                },
+                new ConfigurationItem
+                {
+                    Key = "Logging:IncludeScopes",
+                    Value = $"{App.Configuration["Logging:IncludeScopes"]}"
+                },
+                new ConfigurationItem
+                {
+                    Key = "Logging:LogLevel:Default",
+                    Value = $"{App.Configuration["Logging:LogLevel:Default"]}"
+                },
+                new ConfigurationItem
+                {
+                    Key = "Logging:LogLevel:System",
+                    Value = $"{App.Configuration["Logging:LogLevel:System"]}"
+                },
+                new ConfigurationItem
+                {
+                    Key = "Logging:LogLevel:Microsoft",
+                    Value = $"{App.Configuration["Logging:LogLevel:Microsoft"]}"
+                },
+            };
+
+            foreach (var kvp in _configuration.AsEnumerable())
+            {
+                if (kvp.Value != null)
+                {
+                    ConfigurationItems.Add(new ConfigurationItem
+                    {
+                        Key = kvp.Key,
+                        Value = kvp.Value
+                    });
+                }
+            }
+
+        }
+    }
+}
