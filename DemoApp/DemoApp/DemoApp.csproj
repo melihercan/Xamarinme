@@ -28,19 +28,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Components\Hosting.xaml.cs">
+      <DependentUpon>Hosting.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ConfigurationPage.xaml.cs">
       <DependentUpon>ConfigurationPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\HostingPage.xaml.cs">
-      <DependentUpon>HostingPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\ConfigurationPage.xaml">
+    <EmbeddedResource Update="Components\Hosting.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\HostingPage.xaml">
+    <EmbeddedResource Update="Views\ConfigurationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\InternalHostingPage.xaml">

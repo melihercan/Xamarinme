@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using Xamarinme;
 
@@ -15,14 +16,14 @@ namespace DemoApp.ViewModels
     {
         public ObservableCollection<ConfigurationItem> ConfigurationItems { get; set; }
 
-        private readonly ILogger<HostingViewModel> _logger;
+        private readonly ILogger<InternalHostingViewModel> _logger;
         private readonly IXamarinHostEnvironment _environment;
         private readonly IConfiguration _configuration;
         private readonly ISampleService _sampleService;
 
         public InternalHostingViewModel()
         {
-            _logger = App.Host.Services.GetRequiredService<ILogger<HostingViewModel>>();
+            _logger = App.Host.Services.GetRequiredService<ILogger<InternalHostingViewModel>>();
             _environment = App.Host.Services.GetRequiredService<IXamarinHostEnvironment>();
             _configuration = App.Host.Services.GetRequiredService<IConfiguration>();
             _sampleService = App.Host.Services.GetService<ISampleService>();
@@ -55,6 +56,18 @@ namespace DemoApp.ViewModels
                     Value = $"{App.Configuration["Logging:LogLevel:Microsoft"]}"
                 },
             };
+
+            foreach (var kvp in _configuration.AsEnumerable())
+            {
+                if (kvp.Value != null)
+                {
+                    ConfigurationItems.Add(new ConfigurationItem
+                    {
+                        Key = kvp.Key,
+                        Value = kvp.Value
+                    });
+                }
+            }
         }
     }
 }

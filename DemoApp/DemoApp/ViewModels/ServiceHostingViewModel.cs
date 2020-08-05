@@ -57,6 +57,18 @@ namespace DemoApp.ViewModels
                     Value = $"{App.Configuration["Logging:LogLevel:Microsoft"]}"
                 },
             };
+
+            foreach (var kvp in _configuration.AsEnumerable())
+            {
+                if (kvp.Value != null)
+                {
+                    ConfigurationItems.Add(new ConfigurationItem
+                    {
+                        Key = kvp.Key,
+                        Value = kvp.Value
+                    });
+                }
+            }
         }
     }
 }
