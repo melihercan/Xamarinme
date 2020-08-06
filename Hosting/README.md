@@ -91,6 +91,36 @@ And the using services examples:
 Install the NuGet packet `Xamarinme.Hosting` with VS2019 or by Package Manager Console:
 
 `Install-Package Xamarinme.Hosting`
+## API
+### XamarinHostBuilder
+```cs
+        public XamarinHostConfiguration Configuration { get; }
+        public IServiceCollection Services { get; }
+        public IXamarinHostEnvironment HostEnvironment { get; }
+        public ILoggingBuilder Logging { get; private set; }
+
+        public static XamarinHostBuilder CreateDefault(EmbeddedResourceConfigurationOptions configurationOptions) { ... }
+        public IHost Build() { ... }
+```
+### XamarinHostConfiguration
+```cs
+  public class XamarinHostConfiguration : IConfiguration, IConfigurationRoot, IConfigurationBuilder { ... }
+```
+### IXamarinHostEnvironment
+```cs
+    public interface IXamarinHostEnvironment
+    {
+        /// <summary>
+        /// Gets the name of the runningenvironment. 
+        /// This is configured to use the environment of the application hosting the Xamarin application.
+        /// Configured to "Production" when not specified by the host.
+        /// </summary>
+        string Environment { get; }
+    }
+```
+
+
+
 
 
 
