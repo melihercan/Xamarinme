@@ -75,6 +75,19 @@ Blazor WebAssemblyHostBuilder has been uses as a template to implement the libra
     
 ```
 
+For other files the services can be obtained by using `App.Host`. Here are some examples to obtain built-in and user services:
+```cs
+            var logger = App.Host.Services.GetRequiredService<ILogger<Xxx>>(),
+            var environment = App.Host.Services.GetRequiredService<IXamarinHostEnvironment>(),
+            var configuration = App.Host.Services.GetRequiredService<IConfiguration>(),
+            var sampleService = App.Host.Services.GetService<ISampleService>())
+```
+And the using services examples:
+```cs
+            logging.LogInformation($"Config value of Build:{configuration["Build"]}");
+            logging.LogInformation($"Environment: {environemnt.Environment}");
+```
+
 
 
 
