@@ -5,7 +5,7 @@ Xamarin don't have such support out of the box and this library aims to provide 
 * Configuration: Uses [Xamarinme.Configuration](https://github.com/melihercan/Xamarinme/blob/master/Configuration/README.md) library that supports embedded resource configuration provider.
 * Dependency Injection: Uses .NET Core dependency injection. 
 * Logging: Supports Debug logging provider.
-* Environment: Provides execution environment: "Development", "Production", "Staging" or custom string. The execution environemnt string is obtained from environemnt variables: "ASPNETCORE_ENVIRONMENT" and "DOTNET_ENVIRONMENT". "ASPNETCORE_ENVIRONMENT" overrides "DOTNET_ENVIRONMENT" and "Production" is the default if no environment variables are specified.  
+* Environment: Provides execution environment: "Development", "Production", "Staging" or custom string. The execution environemnt string is obtained from environment variables: "ASPNETCORE_ENVIRONMENT" and "DOTNET_ENVIRONMENT". "ASPNETCORE_ENVIRONMENT" overrides "DOTNET_ENVIRONMENT" and "Production" is the default if no environment variables are specified.  
 Blazor WebAssemblyHostBuilder has been uses as a template to implement the library.
 
 ## Usage
