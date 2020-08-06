@@ -83,7 +83,7 @@ For other files the services can be obtained by using `App.Host`. Here are some 
             var configuration = App.Host.Services.GetRequiredService<IConfiguration>();
             var sampleService = App.Host.Services.GetService<ISampleService>());
 ```
-And the using services examples:
+And using services examples:
 ```cs
             logging.LogInformation($"Config value of Build:{configuration["Build"]}");
             logging.LogInformation($"Environment: {environemnt.Environment}");
