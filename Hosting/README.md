@@ -51,7 +51,8 @@ Blazor WebAssemblyHostBuilder has been uses as a template to implement the libra
         IXamarinHostEnvironment GetXamarinHostEnvironment();
         IConfiguration GetConfiguration();
     }
-    
+```
+```cs
    public class SampleService : ISampleService
     {
         private readonly ILogger<SampleService> _logger;
