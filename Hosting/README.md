@@ -42,7 +42,36 @@ Blazor WebAssemblyHostBuilder has been uses as a template to implement the libra
 * Finally a host is created by calling the `Build` method. Note that there is no need to call the `Run` method like in .NET Core apps as running is handled by Xamarin itself.
 * A static `Host` variable is defined which can be used by any Xamarin sub-module to access the `Services` parameter to add/get services during run time.
 
+.NET dependency injection module can inject services such as `IConfiguration`, `IXamarinHostEnvironment`, `ILogger` into the construtors of services created by dependency injection. Here is a sample service:
+```cs
+    public interface ISampleService
+    {
+        ILogger<SampleService> GetSampleLogger();
+        IXamarinHostEnvironment GetXamarinHostEnvironment();
+        IConfiguration GetConfiguration();
+    }
+    
+   public class SampleService : ISampleService
+    {
+        private readonly ILogger<SampleService> _logger;
+        private readonly IXamarinHostEnvironment _environment;
+        private readonly IConfiguration _configuration;
 
+        public SampleService(ILogger<SampleService> logger, IXamarinHostEnvironment environment, IConfiguration configuration)
+        {
+            _logger = logger;
+            _environment = environment;
+            _configuration = configuration;
+        }
+
+        public ILogger<SampleService> GetSampleLogger() => _logger;
+
+        public IXamarinHostEnvironment GetXamarinHostEnvironment() => _environment;
+
+        public IConfiguration GetConfiguration() => _configuration;
+    }    
+    
+```
 
 
 
