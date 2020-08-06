@@ -87,6 +87,10 @@ And the using services examples:
             logging.LogInformation($"Config value of Build:{configuration["Build"]}");
             logging.LogInformation($"Environment: {environemnt.Environment}");
 ```
+## Installation
+Install the NuGet packet `Xamarinme.Hosting` with VS2019 or by Package Manager Console:
+
+`Install-Package Xamarinme.Hosting`
 
 
 
