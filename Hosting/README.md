@@ -85,8 +85,8 @@ For other files the services can be obtained by using `App.Host`. Here are some 
 ```
 And using services examples:
 ```cs
-            logging.LogInformation($"Config value of Build:{configuration["Build"]}");
-            logging.LogInformation($"Environment: {environemnt.Environment}");
+            logger.LogInformation($"Config value of Build:{configuration["Build"]}");
+            logger.LogInformation($"Environment: {environemnt.Environment}");
 ```
 ## Installation
 Install the NuGet packet `Xamarinme.Hosting` with VS2019 or by Package Manager Console:
