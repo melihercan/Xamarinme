@@ -21,7 +21,8 @@ Blazor WebAssemblyHostBuilder has been uses as a template to implement the libra
             InitializeComponent();
             MainPage = new AppShell();
         }
-
+```
+```cs
         private void InitializeXamarinHostBuilder()
         {
             var hostBuilder = XamarinHostBuilder.CreateDefault(new EmbeddedResourceConfigurationOptions
