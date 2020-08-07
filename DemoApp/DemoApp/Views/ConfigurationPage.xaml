@@ -9,35 +9,32 @@
              BackgroundColor="#e3edf7"             
              x:Class="DemoApp.Views.ConfigurationPage">
     <ContentPage.Content>
-        <StackLayout>
+        <ScrollView>
+            <StackLayout Padding="0,20" >
 
-
-            <ListView ItemsSource="{Binding ConfigurationItems}" HasUnevenRows="true" 
-                              SeparatorVisibility="None" VerticalOptions="FillAndExpand">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <neo:NeoFrame Elevation=".25"
-                          CornerRadius="20,20,20,20"
-                          BackgroundColor="#e3edf7">
-
-                <StackLayout Orientation="Vertical"
-                             VerticalOptions="FillAndExpand"
-                             HorizontalOptions="FillAndExpand"
-                             Padding="30">
-
-                                    <StackLayout Spacing="0" BackgroundColor="{Binding BackgroundColor}">
-                                        <Label Text="{Binding Key}" FontAttributes="Bold"/>
-                                        <Label Text="{Binding Value}" FontSize="Small" VerticalOptions="End" />
+                <ListView ItemsSource="{Binding ConfigurationItems}" HasUnevenRows="true" 
+                      SeparatorVisibility="None" VerticalOptions="FillAndExpand" BackgroundColor="#e3edf7">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <neo:NeoFrame Elevation=".25"
+                                          Margin="10,0"
+                                          CornerRadius="20,20,20,20"
+                                          BackgroundColor="#e3edf7">
+                                    <StackLayout Orientation="Horizontal"
+                                             VerticalOptions="FillAndExpand"
+                                             HorizontalOptions="FillAndExpand"
+                                             Padding="30,20">
+                                        <Label Text="{Binding Key}" FontSize="Small" FontAttributes="Italic"/>
+                                        <Label Text="{Binding Value}"  FontAttributes="Bold" />
                                     </StackLayout>
-                </StackLayout>
-            </neo:NeoFrame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                </neo:NeoFrame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-
-        </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

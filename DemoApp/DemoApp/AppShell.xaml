@@ -52,8 +52,7 @@
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FaFont"
                                  Glyph="&#xf03a;"
-                                 Size="50"
-                                 Color="#283e4a"/>
+                                 Size="20" />
             </ShellContent.Icon>
         </ShellContent>
         <Tab Route="hosting"
@@ -61,30 +60,17 @@
             <Tab.Icon>
                 <FontImageSource FontFamily="FaFont"
                                  Glyph="&#xf108;"
-                                 Size="50"
-                                 Color="#283e4a"/>
+                                 Size="20" />
             </Tab.Icon>
         
             <ShellContent Route="internal"
                           Title="Internal" 
                           ContentTemplate="{DataTemplate local:InternalHostingPage}">
-                <ShellContent.Icon>
-                    <FontImageSource FontFamily="FaFont"
-                                     Glyph="&#xf108;"
-                                     Size="50"
-                                     Color="#283e4a"/>
-                </ShellContent.Icon>
             </ShellContent>
 
             <ShellContent Route="service"
                           Title="Service" 
                           ContentTemplate="{DataTemplate local:ServiceHostingPage}">
-                <ShellContent.Icon>
-                    <FontImageSource FontFamily="FaFont"
-                                     Glyph="&#xf108;"
-                                     Size="50"
-                                     Color="#283e4a"/>
-                </ShellContent.Icon>
             </ShellContent>
 
         </Tab>

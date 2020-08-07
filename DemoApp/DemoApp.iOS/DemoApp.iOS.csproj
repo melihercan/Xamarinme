@@ -142,4 +142,7 @@
       <Name>DemoApp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\me.png" />
+  </ItemGroup>
 </Project>
