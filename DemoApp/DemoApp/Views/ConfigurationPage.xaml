@@ -3,26 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:neo="clr-namespace:Xamarin.Forms.NeoControls;assembly=Xamarin.Forms.NeoControls"
              mc:Ignorable="d"
              Title="Configuration"
+             BackgroundColor="#e3edf7"             
              x:Class="DemoApp.Views.ConfigurationPage">
     <ContentPage.Content>
         <StackLayout>
-            
-            <ListView ItemsSource="{Binding ConfigurationItems}" BackgroundColor="White" HasUnevenRows="true" 
-                      SeparatorVisibility="None" VerticalOptions="FillAndExpand">
+
+
+            <ListView ItemsSource="{Binding ConfigurationItems}" HasUnevenRows="true" 
+                              SeparatorVisibility="None" VerticalOptions="FillAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Spacing="0" BackgroundColor="{Binding BackgroundColor}">
-                                <Label Text="{Binding Key}" FontAttributes="Bold" />
-                                <Label Text="{Binding Value}" FontSize="Small" VerticalOptions="End" />
-                                <!--<Label Text="{Binding Text}" FontSize="Small"/>-->
-                            </StackLayout>
+                            <neo:NeoFrame Elevation=".25"
+                          CornerRadius="20,20,20,20"
+                          BackgroundColor="#e3edf7">
+
+                <StackLayout Orientation="Vertical"
+                             VerticalOptions="FillAndExpand"
+                             HorizontalOptions="FillAndExpand"
+                             Padding="30">
+
+                                    <StackLayout Spacing="0" BackgroundColor="{Binding BackgroundColor}">
+                                        <Label Text="{Binding Key}" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Value}" FontSize="Small" VerticalOptions="End" />
+                                    </StackLayout>
+                </StackLayout>
+            </neo:NeoFrame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
 
         </StackLayout>
     </ContentPage.Content>
