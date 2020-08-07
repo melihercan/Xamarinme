@@ -5,7 +5,8 @@ Xamarin don't have such support out of the box and this library aims to provide 
 * Configuration: Uses [Xamarinme.Configuration](https://github.com/melihercan/Xamarinme/blob/master/Configuration/README.md) library that supports embedded resource configuration provider.
 * Dependency Injection: Uses .NET Core dependency injection. 
 * Logging: Supports Debug logging provider.
-* Environment: Provides execution environment: "Development", "Production", "Staging" or custom string. The execution environemnt string is obtained from environemnt variables: "ASPNETCORE_ENVIRONMENT" and "DOTNET_ENVIRONMENT". "ASPNETCORE_ENVIRONMENT" overrides "DOTNET_ENVIRONMENT" and "Production" is the default if no environment variables are specified.  
+* Environment: Provides execution environment: "Development", "Production", "Staging" or custom string. The execution environemnt string is obtained from environment variables: "ASPNETCORE_ENVIRONMENT" and "DOTNET_ENVIRONMENT". "ASPNETCORE_ENVIRONMENT" overrides "DOTNET_ENVIRONMENT" and "Production" is the default if no environment variable is specified.  
+
 Blazor WebAssemblyHostBuilder has been uses as a template to implement the library.
 
 ## Usage
@@ -77,15 +78,15 @@ Blazor WebAssemblyHostBuilder has been uses as a template to implement the libra
 
 For other files the services can be obtained by using `App.Host`. Here are some examples to obtain built-in and user services:
 ```cs
-            var logger = App.Host.Services.GetRequiredService<ILogger<Xxx>>(),
-            var environment = App.Host.Services.GetRequiredService<IXamarinHostEnvironment>(),
-            var configuration = App.Host.Services.GetRequiredService<IConfiguration>(),
-            var sampleService = App.Host.Services.GetService<ISampleService>())
+            var logger = App.Host.Services.GetRequiredService<ILogger<Xxx>>();
+            var environment = App.Host.Services.GetRequiredService<IXamarinHostEnvironment>();
+            var configuration = App.Host.Services.GetRequiredService<IConfiguration>();
+            var sampleService = App.Host.Services.GetService<ISampleService>());
 ```
-And the using services examples:
+And using services examples:
 ```cs
-            logging.LogInformation($"Config value of Build:{configuration["Build"]}");
-            logging.LogInformation($"Environment: {environemnt.Environment}");
+            logger.LogInformation($"Config value of Build:{configuration["Build"]}");
+            logger.LogInformation($"Environment: {environemnt.Environment}");
 ```
 ## Installation
 Install the NuGet packet `Xamarinme.Hosting` with VS2019 or by Package Manager Console:
