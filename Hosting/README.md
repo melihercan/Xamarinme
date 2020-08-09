@@ -7,7 +7,7 @@ Xamarin don't have such support out of the box and this library aims to provide 
 * Logging: Supports Debug logging provider.
 * Environment: Provides execution environment: "Development", "Production", "Staging" or custom string. The execution environemnt string is obtained from environment variables: "ASPNETCORE_ENVIRONMENT" and "DOTNET_ENVIRONMENT". "ASPNETCORE_ENVIRONMENT" overrides "DOTNET_ENVIRONMENT" and "Production" is the default if no environment variable is specified.  
 
-Blazor WebAssemblyHostBuilder has been uses as a template to implement the library.
+Blazor WebAssemblyHostBuilder has been used as a template to implement the library.
 
 ## Usage
 ```cs
