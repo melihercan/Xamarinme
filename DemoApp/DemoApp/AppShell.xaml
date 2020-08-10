@@ -3,8 +3,9 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:views="clr-namespace:DemoApp.Views"
+       xmlns:extensions="clr-namespace:DemoApp.Extensions"
        mc:Ignorable="d"
-       xmlns:local="clr-namespace:DemoApp.Views"
        Title="DemoApp"
        x:Class="DemoApp.AppShell">
 
@@ -31,7 +32,7 @@
             <Image Aspect="AspectFit" 
                    Margin="0,20,0,0"                    
                    HeightRequest="100"
-                   Source="me.png" 
+                   Source="{extensions:ImageResourceMarkupExtension DemoApp.Images.me.png}" 
                    Opacity="0.5"/>
             <Label Text="Xamarinme DemoApp"
                    Padding="0,0,0,20"
@@ -43,16 +44,12 @@
         </StackLayout>
     </Shell.FlyoutHeader>
 
-    <FlyoutItem Route="demoapp"
-                Title="DemoApp"
-                FlyoutDisplayOptions="AsMultipleItems">
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent Route="configuration"
                       Title="Configuration"
-                      ContentTemplate="{DataTemplate local:ConfigurationPage}">
+                      ContentTemplate="{DataTemplate views:ConfigurationPage}">
             <ShellContent.Icon>
-                <FontImageSource FontFamily="FaFont"
-                                 Glyph="&#xf03a;"
-                                 Size="20">
+                <FontImageSource FontFamily="FaFont" Glyph="&#xf03a;" Size="20">
                     <FontImageSource.Color>
                         <OnPlatform x:TypeArguments="Color" Android="#283e4a"/>
                     </FontImageSource.Color>
@@ -62,23 +59,19 @@
         <Tab Route="hosting"
              Title="Hosting">
             <Tab.Icon>
-                <FontImageSource FontFamily="FaFont"
-                                 Glyph="&#xf108;"
-                                 Size="20">
+                <FontImageSource FontFamily="FaFont" Glyph="&#xf108;" Size="20">
                     <FontImageSource.Color>
                         <OnPlatform x:TypeArguments="Color" Android="#283e4a"/>
                     </FontImageSource.Color>
                 </FontImageSource>
             </Tab.Icon>
         
-            <ShellContent Route="internal"
-                          Title="Internal" 
-                          ContentTemplate="{DataTemplate local:InternalHostingPage}">
+            <ShellContent Route="internal" Title="Internal" 
+                          ContentTemplate="{DataTemplate views:InternalHostingPage}">
             </ShellContent>
 
-            <ShellContent Route="service"
-                          Title="Service" 
-                          ContentTemplate="{DataTemplate local:ServiceHostingPage}">
+            <ShellContent Route="service" Title="Service" 
+                          ContentTemplate="{DataTemplate views:ServiceHostingPage}">
             </ShellContent>
 
         </Tab>

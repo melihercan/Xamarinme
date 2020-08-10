@@ -9,12 +9,14 @@
     <None Remove="appsettings.json" />
     <None Remove="Fonts\fa-solid-900.ttf" />
     <None Remove="Fonts\materialdesignicons-webfont.ttf" />
+    <None Remove="Images\me.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="appsettings.json" />
     <EmbeddedResource Include="Fonts\fa-solid-900.ttf" />
     <EmbeddedResource Include="Fonts\materialdesignicons-webfont.ttf" />
+    <EmbeddedResource Include="Images\me.png" />
   </ItemGroup>
 
   <ItemGroup>
