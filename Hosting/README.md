@@ -7,7 +7,7 @@ Xamarin don't have such support out of the box and this library aims to provide 
 * Logging: Supports Debug logging provider.
 * Environment: Provides execution environment: "Development", "Production", "Staging" or custom string. The execution environemnt string is obtained from environment variables: "ASPNETCORE_ENVIRONMENT" and "DOTNET_ENVIRONMENT". "ASPNETCORE_ENVIRONMENT" overrides "DOTNET_ENVIRONMENT" and "Production" is the default if no environment variable is specified.  
 
-Blazor WebAssemblyHostBuilder has been uses as a template to implement the library.
+Blazor WebAssemblyHostBuilder has been used as a template to implement the library.
 
 ## Usage
 ```cs
@@ -42,7 +42,7 @@ Blazor WebAssemblyHostBuilder has been uses as a template to implement the libra
 * A host builder `XamarinHostBuilder` is created by calling `CreateDefault` and providing `EmbeddedResourceConfigurationOptions` configuration builder parameter (see [Xamarinme.Configuration](https://github.com/melihercan/Xamarinme/blob/master/Configuration/README.md) for details).
 * Services can be added to the created host builder. In the above example, `ISampleService` service with implementation class `SampleService` is added.
 * Finally a host is created by calling the `Build` method. Note that there is no need to call the `Run` method like in .NET Core apps as running is handled by Xamarin itself.
-* A static `Host` variable is defined which can be used by any Xamarin sub-module to access the `Services` parameter to add/get services during run time.
+* A static `Host` variable is defined which can be used throughout the code to access the `Services` parameter to add/get services during run time.
 
 .NET dependency injection module can inject services such as `IConfiguration`, `IXamarinHostEnvironment`, `ILogger` into the construtors of services created by dependency injection. Here is a sample service:
 ```cs
