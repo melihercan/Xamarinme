@@ -29,24 +29,16 @@
 
     <Shell.FlyoutHeader>
         <StackLayout BackgroundColor="#283e4a">
-            <Image Aspect="AspectFit" 
-                   Margin="0,20,0,0"                    
-                   HeightRequest="100"
+            <Image Aspect="AspectFit" Margin="0,20,0,0" HeightRequest="100"
                    Source="{extensions:ImageResourceMarkupExtension DemoApp.Images.me.png}" 
                    Opacity="0.5"/>
-            <Label Text="Xamarinme DemoApp"
-                   Padding="0,0,0,20"
-                   TextColor="White"
-                   FontSize="28"
-                   FontAttributes="Bold" 
-                   HorizontalTextAlignment="Center"
-                   VerticalTextAlignment="Center"/>
+            <Label Text="Xamarinme DemoApp" Padding="0,0,0,20" TextColor="White" FontSize="28" FontAttributes="Bold" 
+                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
         </StackLayout>
     </Shell.FlyoutHeader>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
-        <ShellContent Route="configuration"
-                      Title="Configuration"
+        <ShellContent Route="configuration" Title="Configuration"
                       ContentTemplate="{DataTemplate views:ConfigurationPage}">
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FaFont" Glyph="&#xf03a;" Size="20">
@@ -56,8 +48,7 @@
                 </FontImageSource>
             </ShellContent.Icon>
         </ShellContent>
-        <Tab Route="hosting"
-             Title="Hosting">
+        <Tab Route="hosting" Title="Hosting">
             <Tab.Icon>
                 <FontImageSource FontFamily="FaFont" Glyph="&#xf108;" Size="20">
                     <FontImageSource.Color>
@@ -73,7 +64,6 @@
             <ShellContent Route="service" Title="Service" 
                           ContentTemplate="{DataTemplate views:ServiceHostingPage}">
             </ShellContent>
-
         </Tab>
 
     </FlyoutItem>
