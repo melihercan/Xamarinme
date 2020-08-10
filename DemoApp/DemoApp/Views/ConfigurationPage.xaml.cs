@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace DemoApp.Views
 {
@@ -17,6 +19,11 @@ namespace DemoApp.Views
         {
             InitializeComponent();
             BindingContext = new ConfigurationViewModel();
+            ////Shell.SetNavBarIsVisible(this, false);
+            ///
+
+            ////StatusBarTextColorMode.MatchNavigationBarTextLuminosity
+
         }
     }
 }

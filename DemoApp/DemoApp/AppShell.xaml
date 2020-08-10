@@ -52,7 +52,11 @@
             <ShellContent.Icon>
                 <FontImageSource FontFamily="FaFont"
                                  Glyph="&#xf03a;"
-                                 Size="20" />
+                                 Size="20">
+                    <FontImageSource.Color>
+                        <OnPlatform x:TypeArguments="Color" Android="#283e4a"/>
+                    </FontImageSource.Color>
+                </FontImageSource>
             </ShellContent.Icon>
         </ShellContent>
         <Tab Route="hosting"
@@ -60,7 +64,11 @@
             <Tab.Icon>
                 <FontImageSource FontFamily="FaFont"
                                  Glyph="&#xf108;"
-                                 Size="20" />
+                                 Size="20">
+                    <FontImageSource.Color>
+                        <OnPlatform x:TypeArguments="Color" Android="#283e4a"/>
+                    </FontImageSource.Color>
+                </FontImageSource>
             </Tab.Icon>
         
             <ShellContent Route="internal"
