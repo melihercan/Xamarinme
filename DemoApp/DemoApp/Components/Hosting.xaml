@@ -3,25 +3,72 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             BackgroundColor="#e3edf7"
              mc:Ignorable="d"
              x:Class="DemoApp.Components.Hosting">
 
-    <Label Text="{Binding Environment}"/>
+    
+    <Frame Background="Orange" Margin="10" HasShadow="True">
+        <Label HorizontalTextAlignment="Center">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text=" The values have been obtained in "/>
+                    <Span Text="{Binding DerivedClass}" FontAttributes="Bold"/>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </Frame>
 
-    <ListView ItemsSource="{Binding ConfigurationItems}" BackgroundColor="White" HasUnevenRows="true" 
-              SeparatorVisibility="None" VerticalOptions="FillAndExpand">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <StackLayout Spacing="0" BackgroundColor="{Binding BackgroundColor}">
-                        <Label Text="{Binding Key}" FontAttributes="Bold" />
-                        <Label Text="{Binding Value}" FontSize="Small" VerticalOptions="End" />
-                        <!--<Label Text="{Binding Text}" FontSize="Small"/>-->
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <StackLayout Spacing="0" Padding="20,10">
+        <Label Text="Environment"  Background="Blue" TextColor="White" Padding="10,3"/>
+        <Frame Background="#dddddd" Padding="20,10" HasShadow="False" CornerRadius="0">
+            <Label Text="{Binding Environment}"/>
+        </Frame>
+    </StackLayout>
+
+
+    <StackLayout Spacing="0" Padding="20,10">
+        <Label Text="Configuration"  Background="Blue" TextColor="White" Padding="10,3"/>
+
+        <ScrollView Background="#dddddd">
+            <CollectionView ItemsSource="{Binding ConfigurationItems}" Background="#dddddd">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal" Padding="20,4">
+                            <Label Text="{Binding Key}" FontSize="Small" VerticalTextAlignment="Center" 
+                                   FontAttributes="Italic"/>
+                            <Label Text="{Binding Value}"  FontAttributes="Bold" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+    </StackLayout>
+
 
 
 </StackLayout>
+
+
+<!--<ScrollView Background="#dddddd">
+    <StackLayout Spacing="0" Background="#dddddd">
+        <ListView ItemsSource="{Binding ConfigurationItems}" HasUnevenRows="true" 
+                          SeparatorVisibility="None" VerticalOptions="FillAndExpand" Background="#dddddd">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand"
+                                                 HorizontalOptions="FillAndExpand" Padding="20,3">
+                            <Label Text="{Binding Key}" FontSize="Small" VerticalTextAlignment="Center" 
+                                               FontAttributes="Italic"/>
+                            <Label Text="{Binding Value}"  FontAttributes="Bold" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackLayout>
+</ScrollView>-->
+    

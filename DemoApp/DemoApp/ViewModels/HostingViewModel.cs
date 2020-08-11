@@ -33,13 +33,26 @@ namespace DemoApp.ViewModels
                 OnPropertyChanged(); 
             }
         }
+
+        private string _derivedClass;
+        public string DerivedClass
+        {
+            get { return _derivedClass; }
+            set 
+            {
+                _derivedClass = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         public HostingViewModel(ILogger<T> logger, IXamarinHostEnvironment environment, 
-            IConfiguration configuration, ISampleService sampleService)
+            IConfiguration configuration, ISampleService sampleService, string derivedClass)
         {
             _logger = logger;
             _environment = environment;
@@ -47,34 +60,35 @@ namespace DemoApp.ViewModels
             _sampleService = sampleService;
 
             Environment = _environment.Environment;
+            DerivedClass = derivedClass;
 
             ConfigurationItems = new ObservableCollection<ConfigurationItem>
             {
-                new ConfigurationItem
-                {
-                    Key = "Build",
-                    Value = $"{App.Configuration["Build"]}"
-                },
-                new ConfigurationItem
-                {
-                    Key = "Logging:IncludeScopes",
-                    Value = $"{App.Configuration["Logging:IncludeScopes"]}"
-                },
-                new ConfigurationItem
-                {
-                    Key = "Logging:LogLevel:Default",
-                    Value = $"{App.Configuration["Logging:LogLevel:Default"]}"
-                },
-                new ConfigurationItem
-                {
-                    Key = "Logging:LogLevel:System",
-                    Value = $"{App.Configuration["Logging:LogLevel:System"]}"
-                },
-                new ConfigurationItem
-                {
-                    Key = "Logging:LogLevel:Microsoft",
-                    Value = $"{App.Configuration["Logging:LogLevel:Microsoft"]}"
-                },
+                //new ConfigurationItem
+                //{
+                //    Key = "Build",
+                //    Value = $"{App.Configuration["Build"]}"
+                //},
+                //new ConfigurationItem
+                //{
+                //    Key = "Logging:IncludeScopes",
+                //    Value = $"{App.Configuration["Logging:IncludeScopes"]}"
+                //},
+                //new ConfigurationItem
+                //{
+                //    Key = "Logging:LogLevel:Default",
+                //    Value = $"{App.Configuration["Logging:LogLevel:Default"]}"
+                //},
+                //new ConfigurationItem
+                //{
+                //    Key = "Logging:LogLevel:System",
+                //    Value = $"{App.Configuration["Logging:LogLevel:System"]}"
+                //},
+                //new ConfigurationItem
+                //{
+                //    Key = "Logging:LogLevel:Microsoft",
+                //    Value = $"{App.Configuration["Logging:LogLevel:Microsoft"]}"
+                //},
             };
 
             foreach (var kvp in _configuration.AsEnumerable())

@@ -18,7 +18,8 @@ namespace DemoApp.ViewModels
             App.Host.Services.GetRequiredService<ILogger<InternalHostingViewModel>>(),
             App.Host.Services.GetRequiredService<IXamarinHostEnvironment>(),
             App.Host.Services.GetRequiredService<IConfiguration>(),
-            App.Host.Services.GetService<ISampleService>())
+            App.Host.Services.GetService<ISampleService>(),
+            "View Model")
         {
         }
     }

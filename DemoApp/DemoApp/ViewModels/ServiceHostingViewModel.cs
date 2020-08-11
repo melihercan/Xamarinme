@@ -18,7 +18,8 @@ namespace DemoApp.ViewModels
             App.Host.Services.GetService<ISampleService>().GetSampleLogger(),
             App.Host.Services.GetService<ISampleService>().GetXamarinHostEnvironment(),
             App.Host.Services.GetService<ISampleService>().GetConfiguration(),
-            App.Host.Services.GetService<ISampleService>())
+            App.Host.Services.GetService<ISampleService>(),
+            "Service")
         {
         }
     }

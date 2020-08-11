@@ -21,7 +21,8 @@
                                               BackgroundColor="#e3edf7">
                                     <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand"
                                                  HorizontalOptions="FillAndExpand"  Padding="30,20">
-                                        <Label Text="{Binding Key}" FontSize="Small" VerticalTextAlignment="Center" FontAttributes="Italic"/>
+                                        <Label Text="{Binding Key}" FontSize="Small" VerticalTextAlignment="Center" 
+                                               FontAttributes="Italic"/>
                                         <Label Text="{Binding Value}"  FontAttributes="Bold" />
                                     </StackLayout>
                                 </neo:NeoFrame>
