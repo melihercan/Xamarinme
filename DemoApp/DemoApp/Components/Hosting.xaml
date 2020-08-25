@@ -29,21 +29,17 @@
 
     <StackLayout Spacing="0" Padding="20,10">
         <Label Text="Configuration"  Background="Blue" TextColor="White" Padding="10,3"/>
-
-        <ScrollView Background="#dddddd">
-            <CollectionView ItemsSource="{Binding ConfigurationItems}" Background="#dddddd">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Orientation="Horizontal" Padding="20,4">
-                            <Label Text="{Binding Key}" FontSize="Small" VerticalTextAlignment="Center" 
-                                   FontAttributes="Italic"/>
-                            <Label Text="{Binding Value}"  FontAttributes="Bold" />
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </ScrollView>
-
+        <CollectionView ItemsSource="{Binding ConfigurationItems}" Background="#dddddd">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal" Padding="20,4">
+                        <Label Text="{Binding Key}" FontSize="Small" VerticalTextAlignment="Center" 
+                               FontAttributes="Italic"/>
+                        <Label Text="{Binding Value}"  FontAttributes="Bold" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </StackLayout>
 
 
