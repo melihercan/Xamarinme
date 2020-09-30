@@ -14,9 +14,9 @@ It supports DependencyInjection, Configuration, Logging and Environment.</Descri
     <RepositoryUrl>https://github.com/melihercan/Xamarinme</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>xamarin .net core hosting</PackageTags>
-    <PackageReleaseNotes>Using "XAMARIN_ENVIRONMENT" entry defined in appsettings.json file to override default hosting environment value "Production".</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed a bug. It was throwing an exception when "XAMARIN_ENVIRONMENT" entry was not defined.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

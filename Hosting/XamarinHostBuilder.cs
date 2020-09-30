@@ -82,7 +82,11 @@ namespace Xamarinme
                     // Get "XAMARIN_ENVIRONMENT" entry if defined.
                     var json = new StreamReader(stream).ReadToEnd();
                     var content = JsonDocument.Parse(json);
-                    environment = content.RootElement.GetProperty("XAMARIN_ENVIRONMENT").GetString();
+                    try
+                    {
+                        environment = content.RootElement.GetProperty("XAMARIN_ENVIRONMENT").GetString();
+                    }
+                    catch { }
                 }
             }
 
