@@ -62,35 +62,7 @@ namespace DemoApp.ViewModels
             Environment = _environment.Environment;
             DerivedClass = derivedClass;
 
-            ConfigurationItems = new ObservableCollection<ConfigurationItem>
-            {
-                //new ConfigurationItem
-                //{
-                //    Key = "Build",
-                //    Value = $"{App.Configuration["Build"]}"
-                //},
-                //new ConfigurationItem
-                //{
-                //    Key = "Logging:IncludeScopes",
-                //    Value = $"{App.Configuration["Logging:IncludeScopes"]}"
-                //},
-                //new ConfigurationItem
-                //{
-                //    Key = "Logging:LogLevel:Default",
-                //    Value = $"{App.Configuration["Logging:LogLevel:Default"]}"
-                //},
-                //new ConfigurationItem
-                //{
-                //    Key = "Logging:LogLevel:System",
-                //    Value = $"{App.Configuration["Logging:LogLevel:System"]}"
-                //},
-                //new ConfigurationItem
-                //{
-                //    Key = "Logging:LogLevel:Microsoft",
-                //    Value = $"{App.Configuration["Logging:LogLevel:Microsoft"]}"
-                //},
-            };
-
+            ConfigurationItems = new ObservableCollection<ConfigurationItem>();
             foreach (var kvp in _configuration.AsEnumerable())
             {
                 if (kvp.Value != null)

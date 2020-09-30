@@ -1,4 +1,5 @@
 ﻿using DemoApp.Models;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,34 +13,19 @@ namespace DemoApp.ViewModels
 
         public ConfigurationViewModel()
         {
-            ConfigurationItems = new ObservableCollection<ConfigurationItem> 
-            { 
-                new ConfigurationItem
+            ConfigurationItems = new ObservableCollection<ConfigurationItem>(); 
+            foreach (var kvp in App.Configuration.AsEnumerable())
+            {
+                if (kvp.Value != null)
                 {
-                    Key = "Build",
-                    Value = $"{App.Configuration["Build"]}"
-                },
-                new ConfigurationItem
-                {
-                    Key = "Logging:IncludeScopes",
-                    Value = $"{App.Configuration["Logging:IncludeScopes"]}"
-                },
-                new ConfigurationItem
-                {
-                    Key = "Logging:LogLevel:Default",
-                    Value = $"{App.Configuration["Logging:LogLevel:Default"]}"
-                },
-                new ConfigurationItem
-                {
-                    Key = "Logging:LogLevel:System",
-                    Value = $"{App.Configuration["Logging:LogLevel:System"]}"
-                },
-                new ConfigurationItem
-                {
-                    Key = "Logging:LogLevel:Microsoft",
-                    Value = $"{App.Configuration["Logging:LogLevel:Microsoft"]}"
-                },
-            };
+                    ConfigurationItems.Add(new ConfigurationItem
+                    {
+                        Key = kvp.Key,
+                        Value = kvp.Value
+                    });
+                }
+            }
+
         }
     }
 }
