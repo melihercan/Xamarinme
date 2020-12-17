@@ -1,0 +1,51 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.22">
+
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0; MonoAndroid10.0; Xamarin.iOS10; uap10.0.19041; Xamarin.Mac20</TargetFrameworks>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <LangVersion>8.0</LangVersion>
+        <AssemblyName>Xamarinme.Nfc</AssemblyName>
+        <RootNamespace>XamarinmeNfc</RootNamespace>		
+    </PropertyGroup>
+
+	<ItemGroup>
+		<UpToDateCheckInput Include="*.cs" />
+		<UpToDateCheckInput Include="Shared\*.cs" />
+		<UpToDateCheckInput Include="Android\**\*.cs" />
+		<UpToDateCheckInput Include="iOS\**\*.cs" />
+		<UpToDateCheckInput Include="UWP\*.cs" />
+		<UpToDateCheckInput Include="macOS\*.cs" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<Compile Include="*.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+		<Compile Include="Android\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+		<Compile Include="iOS\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
+		<Compile Include="UWP\*.cs" />
+		<Compile Include="Shared\Pcsc*.cs" />
+		<PackageReference Include="PCSC.Iso7816" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.Mac')) ">
+		<Compile Include="macOS\*.cs" />
+		<Compile Include="Shared\Pcsc*.cs" />
+		<PackageReference Include="PCSC.Iso7816" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NdefLibrary" Version="4.1.0" />
+	</ItemGroup>
+
+
+</Project>
