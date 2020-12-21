@@ -32,6 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\..\Hosting\Hosting.csproj" />
+    <ProjectReference Include="..\..\Nfc\Nfc.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +52,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\InternalHostingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\NfcPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ServiceHostingPage.xaml">

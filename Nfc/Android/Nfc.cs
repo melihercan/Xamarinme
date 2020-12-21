@@ -7,50 +7,57 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace Xamarinme
 {
     public class Nfc : INfc
     {
-        private Activity _mainActivity;
+        private readonly Activity _mainActivity;
         private bool _isSessionEnabled;
-        private bool _isResumed;
-        private bool _isEnabled;
-
+        private bool _isActivityResumed;
+        private bool _isNfcEnabled;
 
         public Nfc()
         {
-            ActivityStateChanged += Nfc_ActivityStateChanged;
-            NewIntentReceived += Nfc_NewIntentReceived;
-            AdapterStateChanged += Nfc_AdapterStateChanged;
+            _mainActivity = Platform.CurrentActivity;
+
+            // Determine _isResumed flag initial value by checking window focus.
+            _isActivityResumed = Platform.CurrentActivity.HasWindowFocus;
+
+            Platform.ActivityStateChanged += (s, e) =>
+            {
+                switch (e.State)
+                {
+                    case (Xamarin.Essentials.ActivityState)ActivityState.Resumed:
+                        _isActivityResumed = true;
+                        if (_isSessionEnabled)
+                            EnableNfc();
+                        break;
+                    case (Xamarin.Essentials.ActivityState)ActivityState.Paused:
+                        _isActivityResumed = false;
+                        if (_isSessionEnabled)
+                            DisableNfc();
+                        break;
+
+                    default:
+                        break;
+                }
+            }; 
+
+            NewIntentReceived += OnNewIntentReceived;
+            AdapterStateChanged += OnAdapterStateChanged;
         }
 
         public event EventHandler<NfcTagDetectedEventArgs> TagDetected;
         public event EventHandler<EventArgs> SessionTimeout;
 
 
-
-
-        //public async Task<NfcServiceStatus> InitAsync()
-        //{
-        //    ///var activity =  Application. .Context as Activity;
-
-
-        //    await Task.Delay(100);
-
-        //    return NfcServiceStatus.Available;
-         
-        //}
-        //public async Task DeInitAsync()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public Task EnableSessionAsync()
         {
             _isSessionEnabled = true;
 
-            if (_isResumed)
+            if (_isActivityResumed)
             {
                 EnableNfc();
             }
@@ -61,7 +68,7 @@ namespace Xamarinme
         {
             _isSessionEnabled = false;
 
-            if (_isResumed)
+            if (_isActivityResumed)
             {
                 DisableNfc();
             }
@@ -85,36 +92,12 @@ namespace Xamarinme
             throw new NotImplementedException();
         }
 
-        private void Nfc_AdapterStateChanged(object sender, int e)
+        private void OnAdapterStateChanged(object sender, int e)
         {
 
         }
 
-        private void Nfc_ActivityStateChanged(object sender, ActivityState e)
-        {
-            //            _mainActivity ??= (Activity)sender;
-            _mainActivity = (Activity)sender;
-
-            switch(e)
-            {
-                case ActivityState.Resumed:
-                    _isResumed = true;
-                    if (_isSessionEnabled)
-                    {
-                        EnableNfc();
-                    }
-                    break;
-                case ActivityState.Paused:
-                    _isResumed = false;
-                    if (_isSessionEnabled)
-                    {
-                        DisableNfc();
-                    }
-                    break;
-            }
-        }
-
-        private void Nfc_NewIntentReceived(object sender, Intent e)
+        private void OnNewIntentReceived(object sender, Intent e)
         {
             switch (e.Action)
             {
@@ -143,7 +126,7 @@ namespace Xamarinme
 
         private void EnableNfc()
         {
-            if (_isEnabled)
+            if (_isNfcEnabled)
             {
                 return;
             }
@@ -190,12 +173,12 @@ namespace Xamarinme
 
 
 
-            _isEnabled = true;
+            _isNfcEnabled = true;
         }
 
         private void DisableNfc()
         {
-            if (!_isEnabled)
+            if (!_isNfcEnabled)
             {
                 return;
             }
@@ -206,7 +189,7 @@ namespace Xamarinme
                 adapter.DisableForegroundDispatch(_mainActivity);
             }
 
-            _isEnabled = false;
+            _isNfcEnabled = false;
         }
 
 
@@ -214,43 +197,6 @@ namespace Xamarinme
         {
             Resumed,
             Paused
-        }
-
-        public static void Init(Activity mainActivity) => 
-            mainActivity.Application.RegisterActivityLifecycleCallbacks(new MainActivityLifecycleListener());
-
-        private static event EventHandler<ActivityState> ActivityStateChanged;
-        private class MainActivityLifecycleListener : Java.Lang.Object, Application.IActivityLifecycleCallbacks
-        {
-            public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
-            {
-            }
-
-            public void OnActivityDestroyed(Activity activity)
-            {
-            }
-
-            public void OnActivityPaused(Activity activity)
-            {
-                ActivityStateChanged?.Invoke(activity, ActivityState.Paused);
-            }
-
-            public void OnActivityResumed(Activity activity)
-            {
-                ActivityStateChanged?.Invoke(activity, ActivityState.Resumed);
-            }
-
-            public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
-            {
-            }
-
-            public void OnActivityStarted(Activity activity)
-            {
-            }
-
-            public void OnActivityStopped(Activity activity)
-            {
-            }
         }
 
 
@@ -264,7 +210,13 @@ namespace Xamarinme
             catch { }
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
         private static event EventHandler<int> AdapterStateChanged;
+
         [BroadcastReceiver]
         public class AdapterStateActionBroadcastReceiver : BroadcastReceiver
         {

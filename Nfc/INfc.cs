@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Xamarinme
 {
-    public interface INfc
+    public interface INfc : IDisposable
     {
         event EventHandler<NfcTagDetectedEventArgs> TagDetected;
         event EventHandler<EventArgs> SessionTimeout;
@@ -17,7 +17,5 @@ namespace Xamarinme
         Task<List<NdefRecord>> ReadNdefAsync();
         Task WriteNdefAsync(List<NdefRecord> wrNdefRecords);
         Task<List<NdefRecord>> WriteReadNdefAsync(List<NdefRecord> wrNdefRecords);
-
-
     }
 }

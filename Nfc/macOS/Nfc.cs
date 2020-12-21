@@ -57,5 +57,10 @@ namespace Xamarinme
         {
             throw new NotImplementedException();
         }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

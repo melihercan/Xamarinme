@@ -12,7 +12,7 @@ using Xamarinme;
 
 namespace XamarinmeNfc.Shared
 {
-    internal class Pcsc : INfc, IDisposable
+    internal class Pcsc : INfc
     {
         private bool _isDisposed = false;
         private readonly IDeviceMonitor _readersMonitor;
