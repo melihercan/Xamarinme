@@ -18,7 +18,6 @@ namespace Xamarinme
         private bool _isActivityResumed;
         private bool _isNfcEnabled;
         private Android.Nfc.Tag _tag;
-        private byte[] _lastNdefMsgByteArray;
 
         public Nfc()
         {
@@ -75,17 +74,57 @@ namespace Xamarinme
 
         public Task<NdefMessage> ReadNdefAsync()
         {
-            throw new NotImplementedException();
+            var ndef = Android.Nfc.Tech.Ndef.Get(_tag);
+
+            try
+            {
+                ndef.Connect();
+                var ndefMessage = NdefMessage.FromByteArray(ndef.NdefMessage.ToByteArray());
+                ndef.Close();
+
+                return Task.FromResult(ndefMessage);
+            }
+            catch (Exception ex)
+            {
+                if (ndef.IsConnected)
+                    ndef.Close();
+                throw ex;
+            }
         }
 
-        public Task WriteNdefAsync(NdefMessage wrNdefMessage)
+        public async Task WriteNdefAsync(NdefMessage ndefMessage)
         {
-            throw new NotImplementedException();
+            var ndef = Android.Nfc.Tech.Ndef.Get(_tag);
+
+            try
+            {
+                ndef.Connect();
+                await ndef.WriteNdefMessageAsync(new Android.Nfc.NdefMessage(ndefMessage.ToByteArray()));
+                ndef.Close();
+            }
+            catch (Exception ex)
+            {
+                if (ndef.IsConnected)
+                    ndef.Close();
+                throw ex;
+            }
         }
 
-        public Task<NdefMessage> WriteReadNdefAsync(NdefMessage wrNdefMessage)
+        public async Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefMessage)
         {
-            throw new NotImplementedException();
+            await WriteNdefAsync(ndefMessage);
+
+            // Compare the write content to read content to make sure that device responded.
+            // Try this few times with timeout before generating error.
+            for (int i=0; i<5; i++)
+            {
+                await Task.Delay(70);
+                var rdNdefMessage = await ReadNdefAsync();
+                if (!rdNdefMessage.ToByteArray().SequenceEqual(ndefMessage.ToByteArray()))
+                    return rdNdefMessage;
+            }
+
+            throw new Exception("WriteReadNdefAsync failed!!!");
         }
 
         private void EnableNfc()
@@ -150,7 +189,6 @@ namespace Xamarinme
                 _tag = e.GetParcelableExtra(Android.Nfc.NfcAdapter.ExtraTag) as Android.Nfc.Tag;
                 var ndefMessage = NdefMessage.FromByteArray(Android.Nfc.Tech.Ndef.Get(_tag).CachedNdefMessage
                     .ToByteArray());
-                _lastNdefMsgByteArray = ndefMessage.ToByteArray();
                 TagDetected?.Invoke(this, new NfcTagDetectedEventArgs(
                     BitConverter.ToString(_tag.GetId()).Replace("-", ":"),
                     ndefMessage)); 
