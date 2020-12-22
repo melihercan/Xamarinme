@@ -14,8 +14,8 @@ namespace Xamarinme
         Task EnableSessionAsync();
         Task DisableSessionAsync();
 
-        Task<List<NdefRecord>> ReadNdefAsync();
-        Task WriteNdefAsync(List<NdefRecord> wrNdefRecords);
-        Task<List<NdefRecord>> WriteReadNdefAsync(List<NdefRecord> wrNdefRecords);
+        Task<NdefMessage> ReadNdefAsync();
+        Task WriteNdefAsync(NdefMessage ndefMessage);
+        Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefMessage);
     }
 }

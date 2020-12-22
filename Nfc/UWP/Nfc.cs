@@ -29,17 +29,17 @@ namespace Xamarinme
             throw new NotImplementedException();
         }
 
-        public Task<List<NdefRecord>> ReadNdefAsync()
+        public Task<NdefMessage> ReadNdefAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task WriteNdefAsync(List<NdefRecord> wrNdefRecords)
+        public Task WriteNdefAsync(NdefMessage ndefRecords)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<NdefRecord>> WriteReadNdefAsync(List<NdefRecord> wrNdefRecords)
+        public Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefRecords)
         {
             throw new NotImplementedException();
         }

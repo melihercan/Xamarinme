@@ -19,6 +19,13 @@ namespace DemoApp.ViewModels
         public ICommand StartCommand => new Command(async () => 
         {
             await _nfc.EnableSessionAsync();
+            _nfc.TagDetected += (s, e) => 
+            {
+                System.Diagnostics.Debug.WriteLine($"======== TAG DETECTED ========");
+                System.Diagnostics.Debug.WriteLine($"Id: {e.TagId}");
+                System.Diagnostics.Debug.WriteLine(
+                    $"Data: {BitConverter.ToString(e.NdefMessage.ToByteArray()) .Replace("-", string.Empty)}");
+            };
         });
     }
 }
