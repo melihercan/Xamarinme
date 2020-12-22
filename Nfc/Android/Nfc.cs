@@ -27,14 +27,16 @@ namespace Xamarinme
 
             Platform.ActivityStateChanged += (s, e) =>
             {
+                System.Diagnostics.Debug.WriteLine($"========> ActivityState{e.State}");
+
                 switch (e.State)
                 {
-                    case (Xamarin.Essentials.ActivityState)ActivityState.Resumed:
+                    case ActivityState.Resumed:
                         _isActivityResumed = true;
                         if (_isSessionEnabled)
                             EnableNfc();
                         break;
-                    case (Xamarin.Essentials.ActivityState)ActivityState.Paused:
+                    case ActivityState.Paused:
                         _isActivityResumed = false;
                         if (_isSessionEnabled)
                             DisableNfc();
@@ -46,7 +48,7 @@ namespace Xamarinme
             }; 
 
             NewIntentReceived += OnNewIntentReceived;
-            AdapterStateChanged += OnAdapterStateChanged;
+            ////AdapterStateChanged += OnAdapterStateChanged;
         }
 
         public event EventHandler<NfcTagDetectedEventArgs> TagDetected;
@@ -101,9 +103,9 @@ namespace Xamarinme
         {
             switch (e.Action)
             {
-                case NfcAdapter.ActionTagDiscovered:
-                    System.Diagnostics.Debug.WriteLine("========> ACTION: BridgeEventAndroidNfcActionTagDiscovered");
-                    break;
+                //case NfcAdapter.ActionTagDiscovered:
+                  //  System.Diagnostics.Debug.WriteLine("========> ACTION: BridgeEventAndroidNfcActionTagDiscovered");
+                    //break;
 
 ////                case NfcAdapter.ActionTechDiscovered:
     ////                System.Diagnostics.Debug.WriteLine("========> ACTION: BridgeEventAndroidNfcActionTechDiscovered");
@@ -121,7 +123,8 @@ namespace Xamarinme
             var tag = e.GetParcelableExtra(NfcAdapter.ExtraTag) as Tag;
 
             var id = tag.GetId();
-            var techList = tag.GetTechList();
+            System.Diagnostics.Debug.WriteLine($"========> ID: {BitConverter.ToString(id)}");
+            //var techList = tag.GetTechList();
         }
 
         private void EnableNfc()
@@ -134,7 +137,7 @@ namespace Xamarinme
             var adapter = NfcAdapter.GetDefaultAdapter(_mainActivity);
             if (adapter != null)
             {
-                // Filter out NDEF or TagDiscovered intents.
+                // Filter out NDEF intents. Tech or Tag events are low level.
                 // Android prioritize the filters in the following order:
                 //      - ActionNdefDiscovered
                 //      - ActionTechDiscovered
@@ -150,13 +153,13 @@ namespace Xamarinme
                 var ndefFilter = new IntentFilter(NfcAdapter.ActionNdefDiscovered);
                 ndefFilter.AddDataType("*/*");
 
-                var tagFilter = new IntentFilter(NfcAdapter.ActionTagDiscovered);
-                tagFilter.AddCategory(Intent.CategoryDefault);
+                ////var tagFilter = new IntentFilter(NfcAdapter.ActionTagDiscovered);
+                ////tagFilter.AddCategory(Intent.CategoryDefault);
 
                 var filters = new IntentFilter[]
                 {
                     ndefFilter,
-                    tagFilter,
+                    ////tagFilter,
                 };
 
                 //var techListArray = new String[][]
@@ -169,11 +172,13 @@ namespace Xamarinme
                     pendingIntent,
                     filters,
                     null);// techListArray);
+
+         ////var rx = new NfcBroadcastReceiver();
+         ////_mainActivity.RegisterReceiver(rx, ndefFilter);
             }
 
-
-
             _isNfcEnabled = true;
+            System.Diagnostics.Debug.WriteLine("========> NFC Enabled");
         }
 
         private void DisableNfc()
@@ -190,16 +195,53 @@ namespace Xamarinme
             }
 
             _isNfcEnabled = false;
+            System.Diagnostics.Debug.WriteLine("========> NFC DISABLED");
         }
 
 
-        internal enum ActivityState
+        //internal enum ActivityState
+        //{
+          //  Resumed,
+            //Paused
+        //}
+
+
+
+
+        public void Dispose()
         {
-            Resumed,
-            Paused
+            throw new NotImplementedException();
         }
 
+        ////private static event EventHandler<int> AdapterStateChanged;
 
+        //[BroadcastReceiver]
+        ////        [IntentFilter(new[] { NfcAdapter.ActionNdefDiscovered })]
+        //public class NfcBroadcastReceiver : BroadcastReceiver
+        //{
+        //  public override void OnReceive(Context context, Intent intent)
+        //{
+        //  try
+        //{
+        //                    var adapterState = intent.Extras.GetInt(Android.Nfc.NfcAdapter.ExtraAdapterState);
+        //                  AdapterStateChanged?.Invoke(null, adapterState);
+
+        //if (adapterState == Android.Nfc.NfcAdapter.StateOn)
+        //{
+        //}
+        //else if (adapterState == Android.Nfc.NfcAdapter.StateOff)
+        //{
+
+        //}
+        //}
+        //catch { }
+        // }
+        //}
+
+        /// <summary>
+        /// ///////////// TODO: CHECK IF YOU CAN GET NFC INTENT WITH BROADCAST RECEIVERS
+        //// THSI will eliminate the intent event hook in MainActivity file.
+        /// </summary>
         private static event EventHandler<Intent> NewIntentReceived;
         public static void OnNewIntent(Intent intent)
         {
@@ -210,33 +252,5 @@ namespace Xamarinme
             catch { }
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static event EventHandler<int> AdapterStateChanged;
-
-        [BroadcastReceiver]
-        public class AdapterStateActionBroadcastReceiver : BroadcastReceiver
-        {
-            public override void OnReceive(Context context, Intent intent)
-            {
-                try
-                {
-                    var adapterState = intent.Extras.GetInt(Android.Nfc.NfcAdapter.ExtraAdapterState);
-                    AdapterStateChanged?.Invoke(null, adapterState);
-
-                    //if (adapterState == Android.Nfc.NfcAdapter.StateOn)
-                    //{
-                    //}
-                    //else if (adapterState == Android.Nfc.NfcAdapter.StateOff)
-                    //{
-
-                    //}
-                }
-                catch { }
-            }
-        }
     }
 }
