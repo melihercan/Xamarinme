@@ -74,6 +74,9 @@ namespace Xamarinme
 
         public Task<NdefMessage> ReadNdefAsync()
         {
+            if (!_isNfcEnabled)
+                throw new Exception("NFC is not enabled");
+
             var ndef = Android.Nfc.Tech.Ndef.Get(_tag);
 
             try
@@ -94,6 +97,9 @@ namespace Xamarinme
 
         public async Task WriteNdefAsync(NdefMessage ndefMessage)
         {
+            if (!_isNfcEnabled)
+                throw new Exception("NFC is not enabled");
+
             var ndef = Android.Nfc.Tech.Ndef.Get(_tag);
 
             try
@@ -196,6 +202,9 @@ namespace Xamarinme
         }
 
         private static event EventHandler<Intent> NewIntentReceived;
+        
+        // This should be called from main activity when a new intent is received.
+        // Broadcast receivers does not work for NFC intents, so this is required.
         public static void OnNewIntent(Intent intent)
         {
             try
