@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Android", "DemoApp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.iOS", "DemoApp\DemoApp.iOS\DemoApp.iOS.csproj", "{12920A3D-7FB3-442E-9512-5F07239ACAA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nfc", "Nfc\Nfc.csproj", "{CC240B13-85BB-4249-9F42-C7067FD1DA57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nfc", "Nfc\Nfc.csproj", "{CC240B13-85BB-4249-9F42-C7067FD1DA57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +84,7 @@ Global
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Debug|iPhone.Build.0 = Debug|iPhone
+		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Debug|iPhone.Deploy.0 = Debug|iPhone
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator

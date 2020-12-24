@@ -7,98 +7,179 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 //https://forums.xamarin.com/discussion/170773/how-do-i-use-the-writendef-method-in-ios-13-to-write-to-an-nfc-tag
 
 namespace Xamarinme
 {
-    public class Nfc : /*NFCTagReaderSessionDelegate*/ NFCNdefReaderSessionDelegate, INfc
+    public class Nfc : NFCNdefReaderSessionDelegate, INfc
     {
         private bool _isSessionEnabled;
-        //private NFCTagReaderSession _session;
         private NFCNdefReaderSession _session;
-
-        public Nfc()
-        {
-        }
+        private INFCNdefTag _tag;
+        private SemaphoreSlim _lockSemaphore = new SemaphoreSlim(1);
 
         public event EventHandler<NfcTagDetectedEventArgs> TagDetected;
         public event EventHandler<EventArgs> SessionTimeout;
 
-        public Task EnableSessionAsync()
+        public async Task EnableSessionAsync()
         {
-            if (_isSessionEnabled)
-                return Task.CompletedTask;
+            try
+            {
+                await _lockSemaphore.WaitAsync();                
 
-            ///            _session = new NFCTagReaderSession(
-            ///             NFCPollingOption.Iso14443, //// | NFCPollingOption.Iso15693 | NFCPollingOption.Iso18092, 
-            ////          this,
-            ///      DispatchQueue.CurrentQueue)
-            //{
-            //  AlertMessage = "Tap a tag to start..."
-            //};
+                if (_isSessionEnabled)
+                    return;
 
-            _session = new NFCNdefReaderSession(this, DispatchQueue.CurrentQueue, false);
-            _session.BeginSession();
-            _isSessionEnabled = true;
-            return Task.CompletedTask;
+                _session = new NFCNdefReaderSession(this, DispatchQueue.CurrentQueue, false)
+                {
+                    AlertMessage = "Tap a tag to start..."
+                };
+
+                _session.BeginSession();
+                _isSessionEnabled = true;
+                System.Diagnostics.Debug.WriteLine("========> Session enabled");
+            }
+            finally
+            {
+                _lockSemaphore.Release();
+            }
         }
 
-        public Task DisableSessionAsync()
+        public async Task DisableSessionAsync()
         {
-            if (!_isSessionEnabled)
-                return Task.CompletedTask;
+            try
+            {
+                await _lockSemaphore.WaitAsync();
 
-            _session.InvalidateSession();
-            _isSessionEnabled = false;
-            return Task.CompletedTask;
+                if (!_isSessionEnabled)
+                    return;
+
+                _session.InvalidateSession();
+                _isSessionEnabled = false;
+                System.Diagnostics.Debug.WriteLine("========> Session disabled");
+            }
+            finally
+            {
+                _lockSemaphore.Release();
+            }
         }
 
 
-        public Task<NdefMessage> ReadNdefAsync()
+        public async Task<NdefMessage> ReadNdefAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _lockSemaphore.WaitAsync();
+
+                if (!_isSessionEnabled)
+                    throw new Exception("NFC is not enabled");
+
+                var tcs = new TaskCompletionSource<NdefMessage>();
+
+                _tag.ReadNdef((iosNdefMessage, error) =>
+                {
+                    if (error != null)
+                        throw new Exception(error.Description);
+
+                    var ndefMessage = new NdefMessage();
+                    ndefMessage.AddRange(iosNdefMessage.Records.Select(iosRecord => new NdefRecord 
+                    { 
+                        Id = iosRecord.Identifier.ToArray(),
+                        Type = iosRecord.Type.ToArray(),
+                        TypeNameFormat = (NdefRecord.TypeNameFormatType)iosRecord.TypeNameFormat,
+                        Payload = iosRecord.Payload.ToArray()
+                    }));
+
+                    tcs.SetResult(ndefMessage);
+                });
+
+                return await tcs.Task;
+            }
+            finally
+            {
+                _lockSemaphore.Release();
+            }
         }
 
-        public Task WriteNdefAsync(NdefMessage ndefRecords)
+        public async Task WriteNdefAsync(NdefMessage ndefMessage)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _lockSemaphore.WaitAsync();
+
+                if (!_isSessionEnabled)
+                    throw new Exception("NFC is not enabled");
+
+                var tcs = new TaskCompletionSource<object>();
+
+                var iosNdefMessage = new NFCNdefMessage(ndefMessage.ToList().Select(record => new NFCNdefPayload 
+                (
+                    format: (NFCTypeNameFormat)record.TypeNameFormat,
+                    type: NSData.FromArray(record.Type),
+                    identifier: NSData.FromArray(record.Id),
+                    payload: NSData.FromArray(record.Payload)
+                )).ToArray());
+                _tag.WriteNdef(iosNdefMessage, (error) => 
+                {
+                    if (error != null)
+                        throw new Exception(error.Description);
+
+                    tcs.SetResult(null);
+                });
+
+                await tcs.Task;
+            }
+            finally
+            {
+                _lockSemaphore.Release();
+            }
         }
 
-        public Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefRecords)
+        public async Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefMessage)
         {
-            throw new NotImplementedException();
+            await WriteNdefAsync(ndefMessage);
+
+            // Compare the write content to read content to make sure that device responded.
+            // Try this few times with timeout before generating error.
+            for (int i = 0; i < 5; i++)
+            {
+                await Task.Delay(40);
+                var rdNdefMessage = await ReadNdefAsync();
+                if (!rdNdefMessage.ToByteArray().SequenceEqual(ndefMessage.ToByteArray()))
+                    return rdNdefMessage;
+            }
+
+            throw new Exception("WriteReadNdefAsync failed!!!");
         }
 
-        ////[Foundation.Export("readerSession:didDetectTags:")]
-        public override void DidDetectTags(NFCNdefReaderSession session, INFCNdefTag[] tags)
+        public override async void DidDetectTags(NFCNdefReaderSession session, INFCNdefTag[] tags)
         {
-            base.DidDetectTags(session, tags);
+            System.Diagnostics.Debug.WriteLine("========> DidDetectTags");
+
+            _tag = tags[0];
+            await session.ConnectToTagAsync(_tag);
+
+            TagDetected?.Invoke(this, new NfcTagDetectedEventArgs(
+                tagId: string.Empty,    //// TODO: CHECK HOW TO GET ID
+                ndefMessage: await ReadNdefAsync()));
         }
 
         public override void DidDetect(NFCNdefReaderSession session, NFCNdefMessage[] messages)
         {
-            throw new NotImplementedException();
+            System.Diagnostics.Debug.WriteLine("========> DidDetect");
+            throw new Exception("DidDetectTags should be used to access the tag");
         }
 
-        public override void DidInvalidate(NFCNdefReaderSession session, NSError error)
+        public override async void DidInvalidate(NFCNdefReaderSession session, NSError error)
         {
-            throw new NotImplementedException();
-        }
+            System.Diagnostics.Debug.WriteLine($"========> DidInvalidate {error}");
+            await DisableSessionAsync();
 
-#if false
-        public override void DidDetectTags(NFCTagReaderSession session, INFCTag[] tags)
-        {
-            var tag = tags.First();
-
-            Debug.WriteLine($"===========> TAG TAPPED: tag count= {tags.Length}");
-            Debug.WriteLine($"TAG TYPE: {tag.Type}");
+            if ((NFCReaderError)(long)error.Code == NFCReaderError.ReaderSessionInvalidationErrorSessionTimeout)
+                SessionTimeout?.Invoke(this, EventArgs.Empty);
         }
-
-        public override void DidInvalidate(NFCTagReaderSession session, NSError error)
-        {
-        }
-#endif
     }
 }

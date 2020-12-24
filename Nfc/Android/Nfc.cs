@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
@@ -18,6 +19,7 @@ namespace Xamarinme
         private bool _isActivityResumed;
         private bool _isNfcEnabled;
         private Android.Nfc.Tag _tag;
+        private SemaphoreSlim _lockSemaphore = new SemaphoreSlim(1);
 
         public Nfc()
         {
@@ -26,23 +28,32 @@ namespace Xamarinme
             // Determine _isResumed flag initial value by checking window focus.
             _isActivityResumed = Platform.CurrentActivity.HasWindowFocus;
 
-            Platform.ActivityStateChanged += (s, e) =>
+            Platform.ActivityStateChanged += async (s, e) =>
             {
-                switch (e.State)
+                try
                 {
-                    case ActivityState.Resumed:
-                        _isActivityResumed = true;
-                        if (_isSessionEnabled)
-                            EnableNfc();
-                        break;
-                    case ActivityState.Paused:
-                        _isActivityResumed = false;
-                        if (_isSessionEnabled)
-                            DisableNfc();
-                        break;
+                    await _lockSemaphore.WaitAsync();
 
-                    default:
-                        break;
+                    switch (e.State)
+                    {
+                        case ActivityState.Resumed:
+                            _isActivityResumed = true;
+                            if (_isSessionEnabled)
+                                EnableNfc();
+                            break;
+                        case ActivityState.Paused:
+                            _isActivityResumed = false;
+                            if (_isSessionEnabled)
+                                DisableNfc();
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                finally
+                {
+                    _lockSemaphore.Release();
                 }
             }; 
 
@@ -52,40 +63,58 @@ namespace Xamarinme
         public event EventHandler<NfcTagDetectedEventArgs> TagDetected;
         public event EventHandler<EventArgs> SessionTimeout;
 
-        public Task EnableSessionAsync()
+        public async Task EnableSessionAsync()
         {
-            _isSessionEnabled = true;
+            try
+            {
+                await _lockSemaphore.WaitAsync();
 
-            if (_isActivityResumed)
-                EnableNfc();
+                _isSessionEnabled = true;
 
-            return Task.CompletedTask;
+                if (_isActivityResumed)
+                    EnableNfc();
+            }
+            finally
+            {
+                _lockSemaphore.Release();
+            }
         }
 
-        public Task DisableSessionAsync()
+        public async Task DisableSessionAsync()
         {
-            _isSessionEnabled = false;
+            try
+            {
+                await _lockSemaphore.WaitAsync();
 
-            if (_isActivityResumed)
-                DisableNfc();
+                _isSessionEnabled = false;
 
-            return Task.CompletedTask;
+                if (_isActivityResumed)
+                    DisableNfc();
+            }
+            finally
+            {
+                _lockSemaphore.Release();
+
+            }
         }
 
-        public Task<NdefMessage> ReadNdefAsync()
+        public async Task<NdefMessage> ReadNdefAsync()
         {
-            if (!_isNfcEnabled)
-                throw new Exception("NFC is not enabled");
-
-            var ndef = Android.Nfc.Tech.Ndef.Get(_tag);
+            Android.Nfc.Tech.Ndef ndef = null;
 
             try
             {
+                await _lockSemaphore.WaitAsync();
+
+                if (!_isNfcEnabled)
+                    throw new Exception("NFC is not enabled");
+
+                ndef = Android.Nfc.Tech.Ndef.Get(_tag);
                 ndef.Connect();
                 var ndefMessage = NdefMessage.FromByteArray(ndef.NdefMessage.ToByteArray());
                 ndef.Close();
 
-                return Task.FromResult(ndefMessage);
+                return ndefMessage;
             }
             catch (Exception ex)
             {
@@ -93,17 +122,24 @@ namespace Xamarinme
                     ndef.Close();
                 throw ex;
             }
+            finally
+            {
+                _lockSemaphore.Release();
+            }
         }
 
         public async Task WriteNdefAsync(NdefMessage ndefMessage)
         {
-            if (!_isNfcEnabled)
-                throw new Exception("NFC is not enabled");
-
-            var ndef = Android.Nfc.Tech.Ndef.Get(_tag);
+            Android.Nfc.Tech.Ndef ndef = null;
 
             try
             {
+                await _lockSemaphore.WaitAsync();
+
+                if (!_isNfcEnabled)
+                    throw new Exception("NFC is not enabled");
+
+                ndef = Android.Nfc.Tech.Ndef.Get(_tag);
                 ndef.Connect();
                 await ndef.WriteNdefMessageAsync(new Android.Nfc.NdefMessage(ndefMessage.ToByteArray()));
                 ndef.Close();
@@ -113,6 +149,10 @@ namespace Xamarinme
                 if (ndef.IsConnected)
                     ndef.Close();
                 throw ex;
+            }
+            finally
+            {
+                _lockSemaphore.Release();
             }
         }
 
