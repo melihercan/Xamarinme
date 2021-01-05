@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.iOS", "DemoApp\Demo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nfc", "Nfc\Nfc.csproj", "{CC240B13-85BB-4249-9F42-C7067FD1DA57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageLifecycle", "PageLifecycle\PageLifecycle.csproj", "{A1D311B0-1981-4BEC-B574-2743EE04B660}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,18 @@ Global
 		{CC240B13-85BB-4249-9F42-C7067FD1DA57}.Release|iPhone.Build.0 = Release|Any CPU
 		{CC240B13-85BB-4249-9F42-C7067FD1DA57}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{CC240B13-85BB-4249-9F42-C7067FD1DA57}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Release|iPhone.Build.0 = Release|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{A1D311B0-1981-4BEC-B574-2743EE04B660}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

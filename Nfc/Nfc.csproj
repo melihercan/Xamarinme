@@ -46,6 +46,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="NdefLibrary" Version="4.1.0" />
+		<PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
 	</ItemGroup>
 
 

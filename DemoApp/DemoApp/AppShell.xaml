@@ -75,6 +75,16 @@
                 </FontImageSource>
             </ShellContent.Icon>
         </ShellContent>
+        <ShellContent Route="nfc" Title="Lifecycle"
+                      ContentTemplate="{DataTemplate views:PageLifecyclePage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FaFont" Glyph="&#xf1b8;" Size="20">
+                    <FontImageSource.Color>
+                        <OnPlatform x:TypeArguments="Color" Android="#283e4a"/>
+                    </FontImageSource.Color>
+                </FontImageSource>
+            </ShellContent.Icon>
+        </ShellContent>
     </FlyoutItem>
 
 </Shell>
