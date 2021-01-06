@@ -10,26 +10,109 @@ using System.Linq;
 using PCSC.Iso7816;
 using PCSC.Reactive;
 using Xamarinme;
+using PCSC.Reactive.Events;
+using System.Reactive.Linq;
 
 namespace XamarinmeNfc.Shared
 {
     internal class Pcsc : INfc
     {
         private bool _isDisposed = false;
+        private IDisposable _deviceMonitorFactorySubscription;
+        private IDisposable _monitorFactorySubscription;
+        private string _reader; // One active reader at a time. 
 
         public Pcsc()
         {
-            using (var context = ContextFactory.Instance.Establish(SCardScope.System))
-            {
-                var readers = context.GetReaders();
-                Debug.WriteLine($"NUM READERS: {readers.Count()}");
-                foreach (var reader in readers)
-                {
-                    Debug.WriteLine($"READER: {reader}");
-                }
-            }
+            StartMonitoring();
         }
 
+        private void StartMonitoring()
+        {
+            // Start readers monitoring.
+            _deviceMonitorFactorySubscription = DeviceMonitorFactory.Instance
+                .CreateObservable(SCardScope.System)
+                .Subscribe(
+                    onNext: deviceMonitorEvent =>
+                    {
+                        var readers = deviceMonitorEvent.Readers;
+                        Debug.WriteLine($"---> {deviceMonitorEvent.GetType().Name} " +
+                            $"- readers: {string.Join(", ", readers)}");
+
+                        switch (deviceMonitorEvent)
+                        {
+                            case DeviceMonitorInitialized deviceMonitorInitialized:
+                                break;
+
+                            case ReadersAttached readersAttached:
+                                _monitorFactorySubscription?.Dispose();
+                                _monitorFactorySubscription = null;
+                                break;
+
+                            case ReadersDetached readersDetached:
+                                if (_reader != null && !readers.Contains(_reader))
+                                {
+                                    // Active reader has been removed. Abort anything ongoing.
+                                    _reader = null;
+                                }
+                                _monitorFactorySubscription?.Dispose();
+                                _monitorFactorySubscription = null;
+                                break;
+
+                            default:
+                                return;
+                        }
+
+                        // Start card monitoring if there are readers.
+                        if (readers.Count() != 0)
+                        {
+                            _monitorFactorySubscription = MonitorFactory.Instance
+                                .CreateObservable(SCardScope.System, readers)
+                                .Subscribe(
+                                    onNext: monitorEvent =>
+                                    {
+                                        var reader = monitorEvent.ReaderName;
+                                        Debug.WriteLine($"---> {monitorEvent.GetType().Name} " +
+                                            $"- reader: {reader}");
+
+                                        switch (monitorEvent)
+                                        {
+                                            case CardInserted inserted:
+                                                _reader = reader;
+                                                break;
+
+                                            case CardRemoved removed:
+                                                _reader = null;
+                                                break;
+
+                                            case MonitorInitialized initialized:
+                                            case MonitorCardInfoEvent infoEvent:
+                                            case CardStatusChanged statusChanged:
+                                            default:
+                                                return;
+                                        }
+
+                                    },
+                                    onError: ex =>
+                                    {
+                                        Debug.WriteLine($"Card Error: {ex.Message} _reader: {_reader}");
+                                        _reader = null;
+                                    });
+                        }
+                    },
+                    onError: ex =>
+                    {
+                        Debug.WriteLine($"Reader Error: {ex.Message} _reader: {_reader}");
+                        _reader = null;
+                        Task.Run(() => StartMonitoring());
+                    });
+        }
+
+        private void StopMonitoring()
+        {
+            _deviceMonitorFactorySubscription?.Dispose();
+            _monitorFactorySubscription?.Dispose();
+        }
 
         public event EventHandler<NfcTagDetectedEventArgs> TagDetected;
         public event EventHandler<EventArgs> SessionTimeout;
@@ -71,6 +154,7 @@ namespace XamarinmeNfc.Shared
             {
                 if (disposing)
                 {
+                    StopMonitoring();
 ////                    _readersMonitor.Cancel();
     /////                _readersMonitor.StatusChanged -= OnReadersStatusChanged;
          /////           _readersMonitor.Dispose();
