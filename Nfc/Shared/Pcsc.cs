@@ -8,6 +8,7 @@ using PCSC.Monitoring;
 using System.Diagnostics;
 using System.Linq;
 using PCSC.Iso7816;
+using PCSC.Reactive;
 using Xamarinme;
 
 namespace XamarinmeNfc.Shared
@@ -18,7 +19,15 @@ namespace XamarinmeNfc.Shared
 
         public Pcsc()
         {
-
+            using (var context = ContextFactory.Instance.Establish(SCardScope.System))
+            {
+                var readers = context.GetReaders();
+                Debug.WriteLine($"NUM READERS: {readers.Count()}");
+                foreach (var reader in readers)
+                {
+                    Debug.WriteLine($"READER: {reader}");
+                }
+            }
         }
 
 

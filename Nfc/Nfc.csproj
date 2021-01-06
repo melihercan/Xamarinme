@@ -34,14 +34,14 @@
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
 		<Compile Include="UWP\*.cs" />
-		<Compile Include="Shared\Pcsc*.cs" />
+		<Compile Include="Shared\Pcsc.cs" />
 		<PackageReference Include="PCSC.Iso7816" Version="5.0.0" />
 		<PackageReference Include="PCSC.Reactive" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.Mac')) ">
 		<Compile Include="macOS\*.cs" />
-		<Compile Include="Shared\Pcsc*.cs" />
+		<Compile Include="Shared\Pcsc.cs" />
 		<PackageReference Include="PCSC.Iso7816" Version="5.0.0" />
 		<PackageReference Include="PCSC.Reactive" Version="5.0.0" />
 	</ItemGroup>
