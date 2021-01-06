@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />  
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />  
     <PackageReference Include="Xamarin.Forms.NeoControls" Version="1.1.0-pre" />
   </ItemGroup>
@@ -32,7 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\..\Hosting\Hosting.csproj" />
-    <ProjectReference Include="..\..\Nfc\Nfc.csproj" />
     <ProjectReference Include="..\..\PageLifecycle\PageLifecycle.csproj" />
   </ItemGroup>
 
@@ -53,9 +52,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\InternalHostingPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\NfcPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PageLifecyclePage.xaml">

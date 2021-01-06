@@ -19,34 +19,34 @@ namespace Xamarinme
             _pcsc = new Pcsc();
         }
 
-        public async Task EnableSessionAsync()
+        public Task EnableSessionAsync()
         {
-            await _pcsc.EnableSessionAsync();
+            return _pcsc.EnableSessionAsync();
         }
 
         public Task DisableSessionAsync()
         {
-            throw new NotImplementedException();
+            return _pcsc.DisableSessionAsync();
         }
 
         public Task<NdefMessage> ReadNdefAsync()
         {
-            throw new NotImplementedException();
+            return _pcsc.ReadNdefAsync();
         }
 
-        public Task WriteNdefAsync(NdefMessage ndefRecords)
+        public Task WriteNdefAsync(NdefMessage ndefMessage)
         {
-            throw new NotImplementedException();
+            return _pcsc.WriteNdefAsync(ndefMessage);
         }
 
-        public Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefRecords)
+        public Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefMessage)
         {
-            throw new NotImplementedException();
+            return _pcsc.WriteReadNdefAsync(ndefMessage);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _pcsc.Dispose();
         }
     }
 }

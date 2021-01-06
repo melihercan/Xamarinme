@@ -15,6 +15,72 @@ namespace XamarinmeNfc.Shared
     internal class Pcsc : INfc
     {
         private bool _isDisposed = false;
+
+        public Pcsc()
+        {
+
+        }
+
+
+        public event EventHandler<NfcTagDetectedEventArgs> TagDetected;
+        public event EventHandler<EventArgs> SessionTimeout;
+
+        public Task EnableSessionAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task DisableSessionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<NdefMessage> ReadNdefAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task WriteNdefAsync(NdefMessage ndefMessage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefMessage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_isDisposed)
+            {
+                if (disposing)
+                {
+////                    _readersMonitor.Cancel();
+    /////                _readersMonitor.StatusChanged -= OnReadersStatusChanged;
+         /////           _readersMonitor.Dispose();
+                }
+
+                _isDisposed = true;
+            }
+        }
+
+
+
+
+
+
+
+
+
+#if false
+
         private readonly IDeviceMonitor _readersMonitor;
         private class ReaderContext
         {
@@ -49,33 +115,6 @@ namespace XamarinmeNfc.Shared
         }
 
 
-        public event EventHandler<NfcTagDetectedEventArgs> TagDetected;
-        public event EventHandler<EventArgs> SessionTimeout;
-
-        public Task EnableSessionAsync()
-        {
-            return Task.CompletedTask;
-        }
-
-        public Task DisableSessionAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<NdefMessage> ReadNdefAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task WriteNdefAsync(NdefMessage ndefRecords)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefRecords)
-        {
-            throw new NotImplementedException();
-        }
 
         private void OnReadersStatusChanged(object sender, DeviceChangeEventArgs e)
         {
@@ -220,26 +259,7 @@ namespace XamarinmeNfc.Shared
                     return new byte[] { };
             }
         }
+#endif
 
-
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if(!_isDisposed)
-            {
-                if (disposing)
-                {
-                    _readersMonitor.Cancel();
-                    _readersMonitor.StatusChanged -= OnReadersStatusChanged;
-                    _readersMonitor.Dispose();
-                }
-
-                _isDisposed = true;
-            }
-        }
     }
 }

@@ -32,11 +32,5 @@ namespace DemoApp.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
-        protected override void OnNewIntent(Intent intent)
-        {
-            base.OnNewIntent(intent);
-            Xamarinme.Nfc.OnNewIntent(intent);
-        }
     }
 }

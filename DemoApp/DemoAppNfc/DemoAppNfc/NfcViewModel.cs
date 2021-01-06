@@ -6,7 +6,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarinme;
 
-namespace DemoApp.ViewModels
+namespace DemoAppNfc
 {
     public class NfcViewModel
     {
