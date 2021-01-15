@@ -11,11 +11,22 @@ namespace Xamarinme
     {
         private readonly INfc _pcsc;
 
-        public event EventHandler<NfcTagDetectedEventArgs> TagDetected;
-        public event EventHandler<EventArgs> SessionTimeout;
+        public event EventHandler<NfcTagDetectedEventArgs> TagDetected
+        {
+            add => _pcsc.TagDetected += value;
+            remove => _pcsc.TagDetected -= value;
+        }
+        
+        public event EventHandler<EventArgs> SessionTimeout
+        {
+            add => _pcsc.SessionTimeout += value;
+            remove => _pcsc.SessionTimeout -= value;
+        }
 
         public Nfc()
         {
+            //// TODO: FUTURE: Add ProximityDevice support...
+            /// For now PCSC only.
             _pcsc = new Pcsc();
         }
 

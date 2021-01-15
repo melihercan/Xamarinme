@@ -9,58 +9,55 @@ namespace Xamarinme
 {
     public class Nfc : INfc
     {
-        private bool _isSessionEnabled;
+        private readonly INfc _pcsc;
 
-        public event EventHandler<NfcTagDetectedEventArgs> TagDetected;
-        public event EventHandler<EventArgs> SessionTimeout;
+        public event EventHandler<NfcTagDetectedEventArgs> TagDetected
+        {
+            add => _pcsc.TagDetected += value;
+            remove => _pcsc.TagDetected -= value;
+        }
+
+        public event EventHandler<EventArgs> SessionTimeout
+        {
+            add => _pcsc.SessionTimeout += value;
+            remove => _pcsc.SessionTimeout -= value;
+        }
+
+        public Nfc()
+        {
+            //// TODO: FUTURE: Add ProximityDevice support...
+            /// For now PCSC only.
+            _pcsc = new Pcsc();
+        }
 
         public Task EnableSessionAsync()
         {
-            if(_isSessionEnabled)
-            {
-                return Task.CompletedTask;
-            }
-
-
-            _isSessionEnabled = true;
-
-            return Task.CompletedTask;
-
-
+            return _pcsc.EnableSessionAsync();
         }
 
         public Task DisableSessionAsync()
         {
-            if(!_isSessionEnabled)
-            {
-                return Task.CompletedTask;
-            }
-
-            _isSessionEnabled = false;
-
-            return Task.CompletedTask;
-
+            return _pcsc.DisableSessionAsync();
         }
-
 
         public Task<NdefMessage> ReadNdefAsync()
         {
-            throw new NotImplementedException();
+            return _pcsc.ReadNdefAsync();
         }
 
-        public Task WriteNdefAsync(NdefMessage ndefRecords)
+        public Task WriteNdefAsync(NdefMessage ndefMessage)
         {
-            throw new NotImplementedException();
+            return _pcsc.WriteNdefAsync(ndefMessage);
         }
 
-        public Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefRecords)
+        public Task<NdefMessage> WriteReadNdefAsync(NdefMessage ndefMessage)
         {
-            throw new NotImplementedException();
+            return _pcsc.WriteReadNdefAsync(ndefMessage);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _pcsc.Dispose();
         }
     }
 }

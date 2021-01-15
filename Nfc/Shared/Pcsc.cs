@@ -89,7 +89,14 @@ namespace XamarinmeNfc.Shared
                                         switch (monitorEvent)
                                         {
                                             case CardInserted inserted:
-                                                _reader = reader;
+                                                if (_isSessionEnabled)
+                                                {
+                                                    _reader = reader;
+                                                    TagDetected?.Invoke(this, new NfcTagDetectedEventArgs(
+                                                        tagId: GetTagId(),
+                                                        ndefMessage: ReadNdef()));
+                                                }
+
                                                 break;
 
                                             case CardRemoved removed:
@@ -168,102 +175,9 @@ namespace XamarinmeNfc.Shared
             }
         }
 
-        public async Task<NdefMessage> ReadNdefAsync()
+        public Task<NdefMessage> ReadNdefAsync()
         {
-            try
-            {
-                byte[] response = new byte[] { };
-
-                await _lockSemaphore.WaitAsync();
-
-                if (!_isSessionEnabled)
-                    throw new Exception("NFC is not enabled");
-
-
-                // Type2 tags provide TLV data from page 0x04 to 0x84 (512 bytes). 
-                // TLVs start on page boundaries always, hence length field is in the same page
-                // regardless of short or long length.
-                // Page 4 on there are TLVs. Get the NDEF one.
-                // When last page of NDEF message read, it will create interrupt on device
-                // that we read the NFC message.
-                byte ndefTlvPage = 0;
-                for (byte i = 4; i < 0x84; i++)
-                {
-                    byte[] page = ReadBinary(0, i, 4);
-                    if (page[0] == NdefTlv)
-                    {
-                        ndefTlvPage = i;
-                        response = page;
-                        break;
-                    }
-                }
-                // Check if we have good NDEF msg.
-                if (ndefTlvPage == 0)
-                    throw new Exception();
-
-                _ndefTlvPage = ndefTlvPage;
-
-                // Get length.
-                int ndefTlvLen = response[1];
-                int numPayloadPages = 0;
-                int payloadOffset = 0;
-
-                if (ndefTlvLen == 0)
-                {
-                    // Len 0 means the device is in the middle of updating the memory.
-                    throw new Exception("Invalid NDEF data");
-                }
-                else if (ndefTlvLen == 0xFF)
-                {
-                    // Get length.
-                    ndefTlvLen = response[2] << 8 | response[3];
-
-                    // Calculate number of payload page still to be read.
-                    numPayloadPages = ndefTlvLen / 4 + (ndefTlvLen % 4 == 0 ? 0 : 1);
-
-                    // Payload offset.
-                    payloadOffset = 4;
-                }
-                else
-                {
-                    // Calculate number of payload page still to be read.
-                    numPayloadPages = ndefTlvLen / 4 + (ndefTlvLen % 4 < 3 ? 0 : 1);
-
-                    // Payload offset.
-                    payloadOffset = 2;
-                }
-
-                // Make sure we have enough room for payload.
-                if (ndefTlvPage + numPayloadPages > 0x84)
-                    throw new Exception();
-
-                // Read payload pages.
-                for (byte i = (byte)(ndefTlvPage + 1); i < ndefTlvPage + numPayloadPages + 1; i++)
-                {
-                    byte[] page = ReadBinary(0, i, 4);
-                    response = Combine(response, page);
-                }
-
-                var ndef = new byte[ndefTlvLen];
-                Buffer.BlockCopy(response, payloadOffset, ndef, 0, ndefTlvLen);
-                Debug.WriteLine($"{DateTime.Now.TimeOfDay}" + $"#### READ:" + BitConverter.ToString(ndef).
-                    Replace("-", string.Empty));
-
-                return NdefMessage.FromByteArray(ndef);
-            }
-            finally
-            {
-                _lockSemaphore.Release();
-            }
-
-            byte[] Combine(byte[] a, byte[] b)
-            {
-                byte[] c = new byte[a.Length + b.Length];
-                Buffer.BlockCopy(a, 0, c, 0, a.Length);
-                Buffer.BlockCopy(b, 0, c, a.Length, b.Length);
-                return c;
-            }
-
+            return Task.FromResult(ReadNdef());
         }
 
         public async Task WriteNdefAsync(NdefMessage ndefMessage)
@@ -467,7 +381,113 @@ namespace XamarinmeNfc.Shared
         }
 
 
+        private NdefMessage ReadNdef()
+        {
+            try
+            {
+                byte[] response = new byte[] { };
 
+                _lockSemaphore.Wait();
+
+                if (!_isSessionEnabled)
+                    throw new Exception("NFC is not enabled");
+
+
+                // Type2 tags provide TLV data from page 0x04 to 0x84 (512 bytes). 
+                // TLVs start on page boundaries always, hence length field is in the same page
+                // regardless of short or long length.
+                // Page 4 on there are TLVs. Get the NDEF one.
+                // When last page of NDEF message read, it will create interrupt on device
+                // that we read the NFC message.
+                byte ndefTlvPage = 0;
+                for (byte i = 4; i < 0x84; i++)
+                {
+                    byte[] page = ReadBinary(0, i, 4);
+                    if (page[0] == NdefTlv)
+                    {
+                        ndefTlvPage = i;
+                        response = page;
+                        break;
+                    }
+                }
+                // Check if we have good NDEF msg.
+                if (ndefTlvPage == 0)
+                    throw new Exception();
+
+                _ndefTlvPage = ndefTlvPage;
+
+                // Get length.
+                int ndefTlvLen = response[1];
+                int numPayloadPages = 0;
+                int payloadOffset = 0;
+
+                if (ndefTlvLen == 0)
+                {
+                    // Len 0 means the device is in the middle of updating the memory.
+                    throw new Exception("Invalid NDEF data");
+                }
+                else if (ndefTlvLen == 0xFF)
+                {
+                    // Get length.
+                    ndefTlvLen = response[2] << 8 | response[3];
+
+                    // Calculate number of payload page still to be read.
+                    numPayloadPages = ndefTlvLen / 4 + (ndefTlvLen % 4 == 0 ? 0 : 1);
+
+                    // Payload offset.
+                    payloadOffset = 4;
+                }
+                else
+                {
+                    // Calculate number of payload page still to be read.
+                    numPayloadPages = ndefTlvLen / 4 + (ndefTlvLen % 4 < 3 ? 0 : 1);
+
+                    // Payload offset.
+                    payloadOffset = 2;
+                }
+
+                // Make sure we have enough room for payload.
+                if (ndefTlvPage + numPayloadPages > 0x84)
+                    throw new Exception();
+
+                // Read payload pages.
+                for (byte i = (byte)(ndefTlvPage + 1); i < ndefTlvPage + numPayloadPages + 1; i++)
+                {
+                    byte[] page = ReadBinary(0, i, 4);
+                    response = Combine(response, page);
+                }
+
+                var ndef = new byte[ndefTlvLen];
+                Buffer.BlockCopy(response, payloadOffset, ndef, 0, ndefTlvLen);
+                Debug.WriteLine($"{DateTime.Now.TimeOfDay}" + $"#### READ:" + BitConverter.ToString(ndef).
+                    Replace("-", string.Empty));
+
+                return NdefMessage.FromByteArray(ndef);
+            }
+            finally
+            {
+                _lockSemaphore.Release();
+            }
+
+            byte[] Combine(byte[] a, byte[] b)
+            {
+                byte[] c = new byte[a.Length + b.Length];
+                Buffer.BlockCopy(a, 0, c, 0, a.Length);
+                Buffer.BlockCopy(b, 0, c, a.Length, b.Length);
+                return c;
+            }
+        }
+
+        private string GetTagId()
+        {
+            var uid0 = ReadBinary(0, 0, 4);
+            var uid1 = ReadBinary(0, 1, 4);
+            var tagId = new byte[]
+            {
+                uid0[0], uid0[1], uid0[2], uid1[0], uid1[1], uid1[2], uid1[3]
+            };
+            return BitConverter.ToString(tagId).Replace("-", string.Empty);
+        }
 
 
 
