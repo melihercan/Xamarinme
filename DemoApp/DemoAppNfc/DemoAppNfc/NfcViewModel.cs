@@ -21,7 +21,7 @@ namespace DemoAppNfc
         {
             await _nfc.EnableSessionAsync();
 
-            _nfc.TagDetected += async (s, e) =>
+            _nfc.TagDetected += (s, e) =>
             {
                 System.Diagnostics.Debug.WriteLine($"======== TAG DETECTED ========");
                 System.Diagnostics.Debug.WriteLine($"Id: {e.TagId}");
