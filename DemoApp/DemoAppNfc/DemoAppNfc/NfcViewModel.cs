@@ -20,18 +20,16 @@ namespace DemoAppNfc
         public ICommand StartCommand => new Command(async () => 
         {
             await _nfc.EnableSessionAsync();
-            
-            _nfc.TagDetected += async (s, e) => 
+
+            _nfc.TagDetected += async (s, e) =>
             {
                 System.Diagnostics.Debug.WriteLine($"======== TAG DETECTED ========");
                 System.Diagnostics.Debug.WriteLine($"Id: {e.TagId}");
                 System.Diagnostics.Debug.WriteLine(
-                    $"Data: {BitConverter.ToString(e.NdefMessage.ToByteArray()) .Replace("-", string.Empty)}");
+                    $"Data: {BitConverter.ToString(e.NdefMessage.ToByteArray()).Replace("-", string.Empty)}");
 
-                var nm = await _nfc.ReadNdefAsync();
-                System.Diagnostics.Debug.WriteLine($"======== READ ========");
-                System.Diagnostics.Debug.WriteLine(
-                    $"Data: {BitConverter.ToString(nm.ToByteArray()).Replace("-", string.Empty)}");
+                // Start NFC transaction on another context.
+                _ = Task.Run(async () => await StartTransactionAsync());
 
             };
 
@@ -45,5 +43,13 @@ namespace DemoAppNfc
             //await Task.Delay(2000);
             //await _nfc.DisableSessionAsync();
         });
+
+        private async Task StartTransactionAsync()
+        {
+            var nm = await _nfc.ReadNdefAsync();
+            System.Diagnostics.Debug.WriteLine($"======== READ ========");
+            System.Diagnostics.Debug.WriteLine(
+                $"Data: {BitConverter.ToString(nm.ToByteArray()).Replace("-", string.Empty)}");
+        }
     }
 }

@@ -65,6 +65,8 @@ namespace Xamarinme
 
         public async Task EnableSessionAsync()
         {
+            ////TODO: Add Toast if NFC is turned off 
+
             try
             {
                 await _lockSemaphore.WaitAsync();
@@ -255,4 +257,16 @@ namespace Xamarinme
         }
 
     }
+
+    //[BroadcastReceiver]
+    //public class AdapterStateActionBroadcastReceiver : BroadcastReceiver
+    //{
+    //    public static int AdapterState { get; private set; }
+
+    //    public override void OnReceive(Context context, Intent intent)
+    //    {
+    //        AdapterState = intent.Extras.GetInt(Android.Nfc.NfcAdapter.ExtraAdapterState);
+    //    }
+    //}
+
 }
