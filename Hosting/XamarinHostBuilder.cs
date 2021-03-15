@@ -57,8 +57,6 @@ namespace Xamarinme
             });
         }
 
-        private string env = "Production";
-
         private XamarinHostEnvironment InitializeEnvironment(EmbeddedResourceConfigurationOptions configurationOptions)
         {
 #if false

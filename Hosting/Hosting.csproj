@@ -8,15 +8,15 @@
     <Product>Xamarinme.Hosting</Product>
     <Description>Bringing .NET Core Hosting into Xamarin.
 It supports DependencyInjection, Configuration, Logging and Environment.</Description>
-    <Copyright>melihercan 2020</Copyright>
+    <Copyright>melihercan 2021</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>me.png</PackageIcon>
     <RepositoryUrl>https://github.com/melihercan/Xamarinme</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>xamarin .net core hosting</PackageTags>
-    <PackageReleaseNotes>Fixed a bug. It was throwing an exception when "XAMARIN_ENVIRONMENT" entry was not defined.</PackageReleaseNotes>
+    <PackageReleaseNotes>NuGet updates.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
