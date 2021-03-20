@@ -131,6 +131,10 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AppLifecycleStop\AppLifecycleStop.csproj">
+      <Project>{53f45c1d-705c-4091-a55b-c568e0ae9c1c}</Project>
+      <Name>AppLifecycleStop</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Nfc\Nfc.csproj">
       <Project>{cc240b13-85bb-4249-9f42-c7067fd1da57}</Project>
       <Name>Nfc</Name>

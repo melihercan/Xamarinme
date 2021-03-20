@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\AppLifecycleStop\AppLifecycleStop.csproj" />
     <ProjectReference Include="..\..\Configuration\Configuration.csproj" />
     <ProjectReference Include="..\..\Hosting\Hosting.csproj" />
     <ProjectReference Include="..\..\PageLifecycle\PageLifecycle.csproj" />

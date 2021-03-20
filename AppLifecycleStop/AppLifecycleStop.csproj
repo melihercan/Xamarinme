@@ -1,0 +1,32 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.23">
+  
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0; MonoAndroid10.0; Xamarin.iOS10; </TargetFrameworks>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Include="*.cs" />
+    <UpToDateCheckInput Include="Android\**\*.cs" />
+    <UpToDateCheckInput Include="iOS\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="*.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+    <Compile Include="Android\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+    <Compile Include="iOS\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="5.0.0" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+  </ItemGroup>
+
+</Project>
