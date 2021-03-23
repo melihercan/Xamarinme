@@ -22,17 +22,8 @@ namespace DemoApp
             InitializeXamarinConfiguration();
             InitializeXamarinHostBuilder();
 
-            Application.Current.Register(OnStop);
-
             InitializeComponent();
             MainPage = new AppShell();
-
-
-////            MainPage = new NavigationPage(new AppShell())
-    ////        {
-        ////        BarBackgroundColor = Color.FromHex("#283e4a"),
-            ////    BarTextColor = Color.White
-            ////};
         }
 
         protected override void OnStart()
