@@ -14,9 +14,10 @@ It supports DependencyInjection, Configuration, Logging and Environment.</Descri
     <RepositoryUrl>https://github.com/melihercan/Xamarinme</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>xamarin .net core hosting</PackageTags>
-    <PackageReleaseNotes>NuGet updates.</PackageReleaseNotes>
+    <PackageReleaseNotes>Change assembly name to Xamarinme.Hosting.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
+    <AssemblyName>Xamarinme.Hosting</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

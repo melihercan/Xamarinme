@@ -14,10 +14,11 @@ Use appsettings.json file just like in ASP.NET apps to provide configuration par
     <RepositoryUrl>https://github.com/melihercan/Xamarinme</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>xamarin .net core configuration</PackageTags>
-    <PackageReleaseNotes>NuGet updates.</PackageReleaseNotes>
+    <PackageReleaseNotes>Change assembly name to Xamarinme.Configuration.</PackageReleaseNotes>
     <RootNamespace>XamarinmeConfiguration</RootNamespace>
     <AssemblyVersion>1.0.0</AssemblyVersion>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
+    <AssemblyName>Xamarinme.Configuration</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
