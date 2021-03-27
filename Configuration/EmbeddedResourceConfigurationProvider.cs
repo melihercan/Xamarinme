@@ -25,6 +25,8 @@ namespace Xamarinme
                 $"{_options.Prefix}.appsettings.{_environment}.json"
             };
 
+            ////var resources= _options.Assembly.GetManifestResourceNames();
+
             foreach (var configFile in configFiles)
             {
                 if (_options.Assembly.GetManifestResourceInfo(configFile) != null)

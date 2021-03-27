@@ -12,9 +12,19 @@ namespace DemoApp.WebHost
         {
             InitializeComponent();
 
-            new Thread(async () => await Xamarinme.WebHost.Main(null)).Start();
-            
             MainPage = new MainPage();
+
+            new Thread(async () =>
+            {
+                try
+                {
+                    await Xamarinme.WebHost.Main(null);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"######## EXCEPTION: {ex.Message}");
+                }
+            }).Start();
         }
 
         protected override void OnStart()
