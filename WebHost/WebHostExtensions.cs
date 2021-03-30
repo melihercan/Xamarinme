@@ -14,7 +14,8 @@ namespace XamarinmeWebHost
 {
     internal static class WebHostExtensions
     {
-        public static IHostBuilder ConfigureWebHost(this IHostBuilder builder, Action<HostBuilderContext, IApplicationBuilder> configureApp)
+        public static IHostBuilder ConfigureWebHost(this IHostBuilder builder, Action<HostBuilderContext, 
+            IApplicationBuilder> configureApp)
         {
             return builder.ConfigureServices((bulderContext, services) =>
             {
