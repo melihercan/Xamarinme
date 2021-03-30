@@ -58,7 +58,14 @@ namespace Xamarinme
         public static Task Main(string[] args)
         {
             var harmony = new Harmony("org.melihercan.Xamarinme.WebHost");
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
+            try
+            {
+                harmony.PatchAll(Assembly.GetExecutingAssembly());
+            }
+            catch(Exception ex)
+            {
+                var x = ex.Message;
+            }
 
             var webHost = new WebHostBuilder()
                 .ConfigureAppConfiguration((config) =>

@@ -210,6 +210,8 @@ Global
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Debug|ARM.Build.0 = Debug|ARM
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Debug|ARM.Deploy.0 = Debug|ARM
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Debug|iPhone.ActiveCfg = Debug|x86
+		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Debug|iPhone.Build.0 = Debug|x86
+		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Debug|iPhone.Deploy.0 = Debug|x86
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Debug|iPhoneSimulator.ActiveCfg = Debug|x86
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Debug|x64.ActiveCfg = Debug|x64
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Debug|x64.Build.0 = Debug|x64
@@ -270,6 +272,7 @@ Global
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Debug|ARM.ActiveCfg = Debug|iPhoneSimulator
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Debug|iPhone.Build.0 = Debug|iPhone
+		{15522512-15DA-497B-9671-B3AF8AEE1623}.Debug|iPhone.Deploy.0 = Debug|iPhone
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Debug|x64.ActiveCfg = Debug|iPhoneSimulator
@@ -394,6 +397,7 @@ Global
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Debug|ARM.ActiveCfg = Debug|iPhoneSimulator
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Debug|iPhone.Build.0 = Debug|iPhone
+		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Debug|iPhone.Deploy.0 = Debug|iPhone
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Debug|x64.ActiveCfg = Debug|iPhoneSimulator
