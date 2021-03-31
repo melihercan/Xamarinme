@@ -55,6 +55,10 @@ namespace Xamarinme
 
         public static Task Main(string[] args)
         {
+            var ipString = args[0];
+            IPAddress ipAddress;
+            IPAddress.TryParse(ipString, out ipAddress);
+
             var webHost = new WebHostBuilder()
                 .ConfigureAppConfiguration((config) =>
                 {
@@ -72,7 +76,7 @@ namespace Xamarinme
                 })
                 .UseKestrel(options =>
                 {
-                    options.Listen(IPAddress.Loopback, 5000);
+                    options.Listen(/****IPAddress.Loopback****/ ipAddress, 5000);
                 })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()

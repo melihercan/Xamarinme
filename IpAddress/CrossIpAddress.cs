@@ -15,7 +15,7 @@ namespace Xamarinme
                 IIpAddress ret = ipAddress.Value;
                 if (ret == null)
                 {
-                    throw new NotImplementedException("This platform has no Nfc implementation.");
+                    throw new NotImplementedException("This platform has no IpAddress implementation.");
                 }
                 return ret;
             }

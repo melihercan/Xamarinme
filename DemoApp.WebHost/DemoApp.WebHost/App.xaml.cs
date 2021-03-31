@@ -14,11 +14,13 @@ namespace DemoApp.WebHost
 
             MainPage = new MainPage();
 
+            var ipAddress = CrossIpAddress.Current.Get();
+
             new Thread(async () =>
             {
                 try
                 {
-                    await Xamarinme.WebHost.Main(null);
+                    await Xamarinme.WebHost.Main(new string[] { ipAddress });
                 }
                 catch (Exception ex)
                 {
