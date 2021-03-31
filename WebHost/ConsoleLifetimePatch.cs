@@ -17,16 +17,16 @@ namespace Microsoft.Extensions.Hosting.Internal
     /// <summary>
     /// Listens for Ctrl+C or SIGTERM and initiates shutdown.
     /// </summary>
-    /*public*/ class ConsoleLifetimeEx : IHostLifetime, IDisposable
+    /*public*/ class ConsoleLifetimePatch : IHostLifetime, IDisposable
     {
         private readonly ManualResetEvent _shutdownBlock = new ManualResetEvent(false);
         private CancellationTokenRegistration _applicationStartedRegistration;
         private CancellationTokenRegistration _applicationStoppingRegistration;
 
-        public ConsoleLifetimeEx(IOptions<ConsoleLifetimeOptions> options, IHostEnvironment environment, IHostApplicationLifetime applicationLifetime, IOptions<HostOptions> hostOptions)
+        public ConsoleLifetimePatch(IOptions<ConsoleLifetimeOptions> options, IHostEnvironment environment, IHostApplicationLifetime applicationLifetime, IOptions<HostOptions> hostOptions)
             : this(options, environment, applicationLifetime, hostOptions, NullLoggerFactory.Instance) { }
 
-        public ConsoleLifetimeEx(IOptions<ConsoleLifetimeOptions> options, IHostEnvironment environment, IHostApplicationLifetime applicationLifetime, IOptions<HostOptions> hostOptions, ILoggerFactory loggerFactory)
+        public ConsoleLifetimePatch(IOptions<ConsoleLifetimeOptions> options, IHostEnvironment environment, IHostApplicationLifetime applicationLifetime, IOptions<HostOptions> hostOptions, ILoggerFactory loggerFactory)
         {
             Options = options?.Value ?? throw new ArgumentNullException(nameof(options));
             Environment = environment ?? throw new ArgumentNullException(nameof(environment));
@@ -51,12 +51,12 @@ namespace Microsoft.Extensions.Hosting.Internal
             {
                 _applicationStartedRegistration = ApplicationLifetime.ApplicationStarted.Register(state =>
                 {
-                    ((ConsoleLifetimeEx)state).OnApplicationStarted();
+                    ((ConsoleLifetimePatch)state).OnApplicationStarted();
                 },
                 this);
                 _applicationStoppingRegistration = ApplicationLifetime.ApplicationStopping.Register(state =>
                 {
-                    ((ConsoleLifetimeEx)state).OnApplicationStopping();
+                    ((ConsoleLifetimePatch)state).OnApplicationStopping();
                 },
                 this);
             }

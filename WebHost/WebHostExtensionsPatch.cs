@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Hosting.Internal;
 
 namespace Microsoft.AspNetCore.Hosting
 {
-    public static class WebHostExtensions
+    public static class WebHostExtensionsPatch
     {
 #if false
         /// <summary>

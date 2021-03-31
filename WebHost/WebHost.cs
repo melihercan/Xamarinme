@@ -12,19 +12,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
-using XamarinmeWebHost;
-using HarmonyLib;
 using Microsoft.Net.Http.Headers;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using Microsoft.Extensions.Primitives;
 
+
 namespace Xamarinme
 {
     // aspnetcore v2.2.7 = commit be0a4a7f4c
     // runtime v5.0 = commit cf258a14b70
-
     public class WebHost
     {
 #if true
@@ -57,16 +55,6 @@ namespace Xamarinme
 
         public static Task Main(string[] args)
         {
-            var harmony = new Harmony("org.melihercan.Xamarinme.WebHost");
-            try
-            {
-                harmony.PatchAll(Assembly.GetExecutingAssembly());
-            }
-            catch(Exception ex)
-            {
-                var x = ex.Message;
-            }
-
             var webHost = new WebHostBuilder()
                 .ConfigureAppConfiguration((config) =>
                 {
@@ -80,7 +68,7 @@ namespace Xamarinme
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton<IHostLifetime, ConsoleLifetimeEx>();
+                    services.AddSingleton<IHostLifetime, ConsoleLifetimePatch>();
                 })
                 .UseKestrel(options =>
                 {
@@ -95,97 +83,8 @@ namespace Xamarinme
 #endif
 
 
+
 #if false
-        public static async Task Main(string[] args)
-        {
-            //var host = new HostBuilder()
-            //  .ConfigureHostConfiguration((config) =>
-            //  {
-            //      config.AddEmbeddedResource(
-            //          new EmbeddedResourceConfigurationOptions
-            //          {
-            //              Assembly = Assembly.GetExecutingAssembly(),
-            //              Prefix = "XamarinmeWebHost"
-            //          });
-            //    })
-            //    .ConfigureAppConfiguration((hostContext, config) =>
-            //    {
-            //    })
-            //    .ConfigureServices((hostContext, services) =>
-            //    {
-            //      // Override the default host lifetime with ours.
-            //      services.AddSingleton<IHostLifetime, ConsoleLifetimeEx>();
-            //    })
-            //    .UseEmbedIoServer()
-            //    .ConfigureWebHost((hostContext, app) =>
-            //    {
-            //        app.Run(async (context) =>
-            //        {
-            //            await context.Response.WriteAsync("Hello World!");
-            //        });
-            //    })
-            //    .Build();
-            //
-            //System.Diagnostics.Debug.WriteLine($"-------- Running WebHost");
-            //await host.RunAsync();
-
-
-#if true
-            var hostBuilder = new HostBuilder();
-
-            hostBuilder.ConfigureHostConfiguration((config) =>
-            {
-                config.AddEmbeddedResource(
-                    new EmbeddedResourceConfigurationOptions
-                    {
-                        Assembly = Assembly.GetExecutingAssembly(),
-                        Prefix = "XamarinmeWebHost"
-                    });
-            });
-
-            hostBuilder.ConfigureAppConfiguration((hostContext, config) =>
-            {
-            });
-
-            hostBuilder.ConfigureServices((hostContext, services) =>
-            {
-                // Override the default host lifetime with ours.
-                services.AddSingleton<IHostLifetime, ConsoleLifetimeEx>();
-            });
-
-            hostBuilder.UseEmbedIoServer();
-
-            hostBuilder.ConfigureWebHost((hostContext, app) =>
-            {
-                app.Run(async (context) =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });
-
-            var host = hostBuilder.Build();
-
-            System.Diagnostics.Debug.WriteLine($"-------- Running WebHost");
-            await host.RunAsync();
-#endif
-
-
-
-        }
-#endif
-    }
-
-    [HarmonyPatch(typeof(HeaderUtilities), "FormatDate", new Type[] { typeof(DateTimeOffset), typeof(bool) })]
-    class FormatDatePatch
-    {
-        [HarmonyPrefix]
-        static bool FormatDate(ref string __result, DateTimeOffset dateTime, bool quoted)
-        {
-            __result = DateTimeFormatterPatch.ToRfc1123String(dateTime, quoted);
-            return false;
-        }
-    }
-
     internal static class DateTimeFormatterPatch
     {
         private static readonly DateTimeFormatInfo FormatInfo = CultureInfo.InvariantCulture.DateTimeFormat;
@@ -393,6 +292,6 @@ namespace Xamarinme
                 throw new Exception("ThrowHelper.ThrowInvalidOperationException(ExceptionResource.Capacity_NotEnough, value.Length, Capacity - _offset)");
             }
         }
+#endif
     }
-
 }
