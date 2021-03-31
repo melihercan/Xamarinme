@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <LangVersion>8.0</LangVersion>
+    <EnableDefaultItems>true</EnableDefaultItems>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ExcludeCurrentNetCoreAppFromPackage>true</ExcludeCurrentNetCoreAppFromPackage>
+    <!-- Use targeting pack references instead of granular ones in the project file. -->
+    <DisableImplicitAssemblyReferences>false</DisableImplicitAssemblyReferences>
+    <AssemblyName>Microsoft.Extensions.Primitives</AssemblyName>
+    <RootNamespace>Microsoft.Extensions.Primitives</RootNamespace>
+    <Version>5.9.0.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Microsoft.Extensions.Primitives</PackageId>
+    <Product>Microsoft.Extensions.Primitives</Product>
+    <Authors>melihercan</Authors>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.4" />
+  </ItemGroup>
+
+
+
+  <!--<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' or&#xD;&#xA;                        $(TargetFramework.StartsWith('net4'))">
+    <PackageReference Include="System.Memory" Version="$(SystemMemoryVersion)" />
+    <ProjectReference Include="$(LibrariesProjectRoot)System.Runtime.CompilerServices.Unsafe\src\System.Runtime.CompilerServices.Unsafe.ilproj" />
+  </ItemGroup>-->
+
+</Project>
