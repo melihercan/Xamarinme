@@ -28,7 +28,8 @@ namespace Xamarinme
 #if true
         public class Startup
         {
-            private static readonly byte[] _helloWorldBytes = Encoding.UTF8.GetBytes("Hello Xamarin, greetings from Kestrel");
+            private static readonly byte[] _helloWorldBytes = Encoding.UTF8.GetBytes(
+                "Hello Xamarin, greetings from Kestrel");
 
             public void Configure(IApplicationBuilder app)
             {
@@ -82,7 +83,7 @@ namespace Xamarinme
                 .UseStartup<Startup>()
                 .Build();
 
-            return webHost.RunPatchAsync();
+            return webHost.RunPatchedAsync();
         }
 #endif
 

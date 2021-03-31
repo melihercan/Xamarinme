@@ -61,9 +61,9 @@ namespace Microsoft.AspNetCore.Hosting
         /// Runs a web application and block the calling thread until host shutdown.
         /// </summary>
         /// <param name="host">The <see cref="IWebHost"/> to run.</param>
-        public static void RunPatch(this IWebHost host)
+        public static void RunPatched(this IWebHost host)
         {
-            host.RunPatchAsync().GetAwaiter().GetResult();
+            host.RunPatchedAsync().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Microsoft.AspNetCore.Hosting
         /// </summary>
         /// <param name="host">The <see cref="IWebHost"/> to run.</param>
         /// <param name="token">The token to trigger shutdown.</param>
-        public static async Task RunPatchAsync(this IWebHost host, CancellationToken token = default)
+        public static async Task RunPatchedAsync(this IWebHost host, CancellationToken token = default)
         {
             // Wait for token shutdown if it can be canceled
             if (token.CanBeCanceled)
@@ -97,6 +97,14 @@ namespace Microsoft.AspNetCore.Hosting
                 }
             }
         }
+
+        private static EventHandler _shutdownEvent;
+
+        public static void ShutdownPatched(this IWebHost host)
+        {
+            _shutdownEvent?.Invoke(null, EventArgs.Empty);
+        }
+
 
         private static async Task RunAsync(this IWebHost host, CancellationToken token, string shutdownMessage)
         {
@@ -131,6 +139,8 @@ namespace Microsoft.AspNetCore.Hosting
                 await host.WaitForTokenShutdownAsync(token);
             }
         }
+
+
         private static void AttachCtrlcSigtermShutdown(CancellationTokenSource cts, ManualResetEventSlim resetEvent, string shutdownMessage)
         {
             void Shutdown()
@@ -157,11 +167,12 @@ namespace Microsoft.AspNetCore.Hosting
 
             AppDomain.CurrentDomain.ProcessExit += (sender, eventArgs) => Shutdown();
             ////Console.CancelKeyPress += (sender, eventArgs) =>
-            ////{
-                ////Shutdown();
+            _shutdownEvent += (sender, eventArgs) =>
+            {
+                Shutdown();
                 // Don't terminate the process immediately, wait for the Main thread to exit gracefully.
                 ////eventArgs.Cancel = true;
-            ////};
+            };
         }
 
         private static async Task WaitForTokenShutdownAsync(this IWebHost host, CancellationToken token)
