@@ -61,9 +61,9 @@ namespace Microsoft.AspNetCore.Hosting
         /// Runs a web application and block the calling thread until host shutdown.
         /// </summary>
         /// <param name="host">The <see cref="IWebHost"/> to run.</param>
-        public static void RunEx(this IWebHost host)
+        public static void RunPatch(this IWebHost host)
         {
-            host.RunExAsync().GetAwaiter().GetResult();
+            host.RunPatchAsync().GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Microsoft.AspNetCore.Hosting
         /// </summary>
         /// <param name="host">The <see cref="IWebHost"/> to run.</param>
         /// <param name="token">The token to trigger shutdown.</param>
-        public static async Task RunExAsync(this IWebHost host, CancellationToken token = default)
+        public static async Task RunPatchAsync(this IWebHost host, CancellationToken token = default)
         {
             // Wait for token shutdown if it can be canceled
             if (token.CanBeCanceled)

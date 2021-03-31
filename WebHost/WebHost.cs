@@ -78,7 +78,7 @@ namespace Xamarinme
                 .UseStartup<Startup>()
                 .Build();
 
-            return webHost.RunExAsync();
+            return webHost.RunPatchAsync();
         }
 #endif
 
