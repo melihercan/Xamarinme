@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Primit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IpAddress", "IpAddress\IpAddress.csproj", "{F9758FAA-9A25-47CC-87EB-7D2692E43046}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHostPatch", "WebHostPatch\WebHostPatch.csproj", "{83454A2F-34DE-4223-A7C2-A5369CE20D11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHostPatch", "WebHostPatch\WebHostPatch.csproj", "{83454A2F-34DE-4223-A7C2-A5369CE20D11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -179,6 +179,7 @@ Global
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Release|ARM.ActiveCfg = Release|iPhone
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Release|iPhone.ActiveCfg = Release|iPhone
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Release|iPhone.Build.0 = Release|iPhone
+		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Release|iPhone.Deploy.0 = Release|iPhone
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{12920A3D-7FB3-442E-9512-5F07239ACAA4}.Release|x64.ActiveCfg = Release|iPhone
@@ -228,6 +229,8 @@ Global
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Release|ARM.Build.0 = Release|ARM
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Release|ARM.Deploy.0 = Release|ARM
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Release|iPhone.ActiveCfg = Release|x86
+		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Release|iPhone.Build.0 = Release|x86
+		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Release|iPhone.Deploy.0 = Release|x86
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Release|iPhoneSimulator.ActiveCfg = Release|x86
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Release|x64.ActiveCfg = Release|x64
 		{F4ED83B5-2C97-49DD-B702-4A227014A6AF}.Release|x64.Build.0 = Release|x64
@@ -285,6 +288,7 @@ Global
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Release|ARM.ActiveCfg = Release|iPhoneSimulator
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Release|iPhone.ActiveCfg = Release|iPhone
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Release|iPhone.Build.0 = Release|iPhone
+		{15522512-15DA-497B-9671-B3AF8AEE1623}.Release|iPhone.Deploy.0 = Release|iPhone
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{15522512-15DA-497B-9671-B3AF8AEE1623}.Release|x64.ActiveCfg = Release|iPhoneSimulator
@@ -410,6 +414,7 @@ Global
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Release|ARM.ActiveCfg = Release|iPhoneSimulator
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Release|iPhone.ActiveCfg = Release|iPhone
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Release|iPhone.Build.0 = Release|iPhone
+		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Release|iPhone.Deploy.0 = Release|iPhone
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{2F4E63B3-A658-47C3-8083-3C9E25FDD8E4}.Release|x64.ActiveCfg = Release|iPhoneSimulator
