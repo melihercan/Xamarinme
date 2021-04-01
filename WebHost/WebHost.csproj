@@ -6,9 +6,6 @@
     <AssemblyName>Xamarinme.WebHost</AssemblyName>
     <RootNamespace>XamarinmeWebHost</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    		<TargetsForTfmSpecificBuildOutput>
-      $(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage
-    </TargetsForTfmSpecificBuildOutput>
     <TargetsForTfmSpecificBuildOutput>
       $(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage
     </TargetsForTfmSpecificBuildOutput>
@@ -24,10 +21,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="appsettings.json" />

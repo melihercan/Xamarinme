@@ -10,7 +10,7 @@
     <AssemblyName>Microsoft.Extensions.Primitives</AssemblyName>
     <RootNamespace>Microsoft.Extensions.Primitives</RootNamespace>
     <Version>5.9.0.0</Version>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Microsoft.Extensions.Primitives</PackageId>
     <Product>Microsoft.Extensions.Primitives</Product>
     <Authors>melihercan</Authors>

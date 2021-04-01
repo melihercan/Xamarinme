@@ -12,6 +12,7 @@ namespace Microsoft.AspNetCore.Hosting
 {
     public static class WebHostExtensionsPatch
     {
+//// melihercan
 #if false
         /// <summary>
         /// Attempts to gracefully stop the host with the given timeout.
@@ -166,6 +167,8 @@ namespace Microsoft.AspNetCore.Hosting
             };
 
             AppDomain.CurrentDomain.ProcessExit += (sender, eventArgs) => Shutdown();
+            //// melihercan
+            //// Following call throws on Xamarin. I replace it with _shutdownEvent.
             ////Console.CancelKeyPress += (sender, eventArgs) =>
             _shutdownEvent += (sender, eventArgs) =>
             {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using System;
 using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,19 +10,19 @@ namespace DemoApp.WebHost
 {
     public partial class App : Application
     {
+        public static IWebHost Host { get; set; }
+
         public App()
         {
             InitializeComponent();
 
             MainPage = new MainPage();
 
-            var ipAddress = CrossIpAddress.Current.Get();
-
             new Thread(async () =>
             {
                 try
                 {
-                    await Xamarinme.WebHost.Main(new string[] { ipAddress });
+                    await WebHost.Program.Main(null);
                 }
                 catch (Exception ex)
                 {
