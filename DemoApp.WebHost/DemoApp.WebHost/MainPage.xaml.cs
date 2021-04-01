@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarinme;
 
 namespace DemoApp.WebHost
 {
@@ -13,6 +14,11 @@ namespace DemoApp.WebHost
         public MainPage()
         {
             InitializeComponent();
+
+            var ipString = CrossIpAddress.Current.Get();
+            Ip.Text = ipString;
+            Url.Text = $"http://{ipString}:5000";
+
         }
     }
 }
