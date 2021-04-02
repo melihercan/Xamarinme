@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DemoApp.WebHost.WebHost
+namespace DemoApp.WebHost.KestrelWebHost
 {
     public class Startup
     {

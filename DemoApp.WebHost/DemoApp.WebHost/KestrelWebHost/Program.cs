@@ -11,16 +11,12 @@ using Xamarinme;
 using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DemoApp.WebHost.WebHost
+namespace DemoApp.WebHost.KestrelWebHost
 {
     class Program
     {
-        public static Task Main(string[] args)
+        public static Task Main(WebHostParameters webHostParameters)
         {
-            var ipString = CrossIpAddress.Current.Get();
-            IPAddress ipAddress;
-            IPAddress.TryParse(ipString, out ipAddress);
-
             var webHost = new WebHostBuilder()
                 .ConfigureAppConfiguration((config) =>
                 {
@@ -37,7 +33,7 @@ namespace DemoApp.WebHost.WebHost
                 })
                 .UseKestrel(options =>
                 {
-                    options.Listen(ipAddress, 5000);
+                    options.Listen(webHostParameters.ServerIpEndpoint);
                 })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
@@ -47,6 +43,5 @@ namespace DemoApp.WebHost.WebHost
 
             return webHost.RunPatchedAsync();
         }
-
     }
 }

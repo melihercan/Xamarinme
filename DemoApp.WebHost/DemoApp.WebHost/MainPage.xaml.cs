@@ -15,10 +15,8 @@ namespace DemoApp.WebHost
         {
             InitializeComponent();
 
-            var ipString = CrossIpAddress.Current.Get();
-            Ip.Text = ipString;
-            Url.Text = $"http://{ipString}:5000";
-
+            Ip.Text = App.WebHostParameters.ServerIpEndpoint.Address.ToString();
+            Url.Text = $"http://{Ip.Text}:{App.WebHostParameters.ServerIpEndpoint.Port}";
         }
     }
 }

@@ -133,10 +133,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\IpAddress\IpAddress.csproj">
-      <Project>{f9758faa-9a25-47cc-87eb-7d2692e43046}</Project>
-      <Name>IpAddress</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DemoApp.WebHost\DemoApp.WebHost.csproj">
       <Project>{F4CF3AF3-8181-4BD0-AA3F-DF135CCD449B}</Project>
       <Name>DemoApp.WebHost</Name>

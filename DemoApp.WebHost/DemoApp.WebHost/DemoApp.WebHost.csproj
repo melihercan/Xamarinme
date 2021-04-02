@@ -11,10 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="appsettings.json" />
   </ItemGroup>
 
@@ -23,9 +19,5 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
     <PackageReference Include="Xamarinme.Configuration" Version="1.0.2" />
     <PackageReference Include="Xamarinme.WebHostPatch" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\IpAddress\IpAddress.csproj" />
   </ItemGroup>
 </Project>
